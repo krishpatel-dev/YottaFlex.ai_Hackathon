@@ -4,7 +4,6 @@
 [![Streamlit](https://img.shields.io/badge/streamlit-1.40+-FF4B4B.svg)](https://streamlit.io/)
 [![Tests Passing](https://img.shields.io/badge/tests-52%20passed-brightgreen.svg)](tests/)
 [![Code Style](https://img.shields.io/badge/architecture-deterministic%20%26%20explainable-purple.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-green.svg)]()
 
 > **Enterprise-grade compensation intelligence, auditable pay equity benchmarking, explainable disparity detection, and dual-approval governance platform built with Python, Streamlit, and SQLAlchemy.**
 
