@@ -84,7 +84,7 @@ TABLE_SCHEMAS: dict[str, list[str]] = {
 
 # Map table name → CSV filename (try both master/ and transactions/)
 TABLE_FILE_MAP: dict[str, tuple[str, str]] = {
-    "employees":           ("master",       "employees.csv"),
+    "employees":           ("transactions", "employees.csv"),
     "roles":               ("master",       "roles.csv"),
     "levels":              ("master",       "levels.csv"),
     "locations":           ("master",       "locations.csv"),
@@ -111,11 +111,18 @@ def _empty_df(table: str) -> pd.DataFrame:
 
 
 def _safe_load(table: str) -> pd.DataFrame:
-    """Load a single CSV; return empty-schema DataFrame on any failure."""
+    """Load a single CSV; search across transactions, master, and data folders."""
     folder, filename = TABLE_FILE_MAP[table]
     path = _resolve_path(folder, filename)
     if not path.exists():
-        return _empty_df(table)
+        alt_folder = "transactions" if folder == "master" else "master"
+        alt_path = _resolve_path(alt_folder, filename)
+        if alt_path.exists():
+            path = alt_path
+        elif (DATA_DIR / filename).exists():
+            path = DATA_DIR / filename
+        else:
+            return _empty_df(table)
     try:
         df = pd.read_csv(path, low_memory=False)
         # Ensure all expected columns are present (fill missing with NaN)
@@ -142,6 +149,7 @@ def load_all_data() -> dict[str, pd.DataFrame]:
 
     # Post-load type coercions — silent on error
     _coerce_types(data)
+    _enrich_data(data)
     return data
 
 
@@ -187,6 +195,66 @@ def _coerce_types(data: dict[str, pd.DataFrame]) -> None:
         for col in cols:
             if col in df.columns:
                 df[col] = pd.to_datetime(df[col], errors="coerce")
+
+
+def _enrich_data(data: dict[str, pd.DataFrame]) -> None:
+    """Enrich core DataFrames with intuitive denormalized columns for seamless analytics."""
+    # 1. Enrich employees with roles, levels, and locations
+    emp_df = data.get("employees")
+    if emp_df is not None and not emp_df.empty:
+        roles_df = data.get("roles")
+        if roles_df is not None and not roles_df.empty and "role_id" in emp_df.columns:
+            role_cols = [c for c in ["role_id", "role_name", "role_family", "role_code"] if c in roles_df.columns]
+            new_role_cols = [c for c in role_cols if c == "role_id" or c not in emp_df.columns]
+            if len(new_role_cols) > 1:
+                data["employees"] = data["employees"].merge(roles_df[new_role_cols], on="role_id", how="left")
+                emp_df = data["employees"]
+
+        levels_df = data.get("levels")
+        if levels_df is not None and not levels_df.empty and "level_id" in emp_df.columns:
+            lvl_cols = [c for c in ["level_id", "level_code", "rank_order"] if c in levels_df.columns]
+            new_lvl_cols = [c for c in lvl_cols if c == "level_id" or c not in emp_df.columns]
+            if len(new_lvl_cols) > 1:
+                data["employees"] = data["employees"].merge(levels_df[new_lvl_cols], on="level_id", how="left")
+                emp_df = data["employees"]
+
+        locs_df = data.get("locations")
+        if locs_df is not None and not locs_df.empty and "location_id" in emp_df.columns:
+            loc_cols = [c for c in ["location_id", "location_code", "city", "country"] if c in locs_df.columns]
+            new_loc_cols = [c for c in loc_cols if c == "location_id" or c not in emp_df.columns]
+            if len(new_loc_cols) > 1:
+                data["employees"] = data["employees"].merge(locs_df[new_loc_cols], on="location_id", how="left")
+                emp_df = data["employees"]
+
+    # 2. Enrich disparity_flags with root_cause and supporting_evidence
+    flags_df = data.get("disparity_flags")
+    if flags_df is not None and not flags_df.empty:
+        if "root_cause" not in flags_df.columns or flags_df["root_cause"].isna().all():
+            def derive_cause(row):
+                anomaly = str(row.get("_anomaly_type", "") or "")
+                if anomaly and anomaly not in ("nan", "None", ""):
+                    return f"Synthetic Exception: {anomaly}"
+                rule = str(row.get("detection_rule", "") or "")
+                diff = row.get("disparity_pct", 0)
+                issue = str(row.get("issue_type", "") or "")
+                if "DISPARITY" in issue or "DISPARITY" in rule:
+                    try:
+                        return f"Salary diverges by {float(diff):.1f}% from peer median without performance justification"
+                    except Exception:
+                        return "Salary diverges >20% from peer median without performance justification"
+                return f"{issue} flagged by audit rule {rule}"
+            flags_df["root_cause"] = flags_df.apply(derive_cause, axis=1)
+
+        if "supporting_evidence" not in flags_df.columns:
+            flags_df["supporting_evidence"] = "{}"
+
+    # 3. Enrich adjustment_proposals with proposed_change_pct
+    props_df = data.get("adjustment_proposals")
+    if props_df is not None and not props_df.empty:
+        if "proposed_change_pct" not in props_df.columns:
+            curr = pd.to_numeric(props_df.get("current_salary", 0), errors="coerce").replace(0, np.nan)
+            rec = pd.to_numeric(props_df.get("proposed_salary_recommended", 0), errors="coerce")
+            props_df["proposed_change_pct"] = ((rec - curr) / curr * 100).fillna(0.0).round(1)
 
 
 # ---------------------------------------------------------------------------

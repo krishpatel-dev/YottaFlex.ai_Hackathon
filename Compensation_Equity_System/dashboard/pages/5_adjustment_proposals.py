@@ -74,15 +74,24 @@ filtered_proposals = df_props.copy()
 if filter_status != "All":
     filtered_proposals = filtered_proposals[filtered_proposals["final_status"] == filter_status]
 
-display_props = filtered_proposals[[
+if "proposed_change_pct" not in filtered_proposals.columns:
+    curr = pd.to_numeric(filtered_proposals.get("current_salary", 0), errors="coerce").replace(0, np.nan)
+    rec = pd.to_numeric(filtered_proposals.get("proposed_salary_recommended", 0), errors="coerce")
+    filtered_proposals["proposed_change_pct"] = ((rec - curr) / curr * 100).fillna(0.0).round(1)
+
+prop_cols = [
     "proposal_id", "employee_id", "trigger_type", "current_salary",
     "proposed_salary_recommended", "proposed_change_pct", "manager_approval",
     "hr_approval", "final_status"
-]].copy()
+]
+display_props = filtered_proposals[[c for c in prop_cols if c in filtered_proposals.columns]].copy()
 
-display_props["current_salary"] = display_props["current_salary"].apply(format_inr)
-display_props["proposed_salary_recommended"] = display_props["proposed_salary_recommended"].apply(format_inr)
-display_props["proposed_change_pct"] = display_props["proposed_change_pct"].apply(lambda x: f"+{x:.1f}%")
+if "current_salary" in display_props.columns:
+    display_props["current_salary"] = display_props["current_salary"].apply(format_inr)
+if "proposed_salary_recommended" in display_props.columns:
+    display_props["proposed_salary_recommended"] = display_props["proposed_salary_recommended"].apply(format_inr)
+if "proposed_change_pct" in display_props.columns:
+    display_props["proposed_change_pct"] = display_props["proposed_change_pct"].apply(lambda x: f"+{x:.1f}%" if pd.notna(x) else "+0.0%")
 
 render_styled_dataframe(display_props, height=350)
 

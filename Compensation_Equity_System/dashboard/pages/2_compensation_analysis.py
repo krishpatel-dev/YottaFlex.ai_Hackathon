@@ -38,13 +38,15 @@ df_bands = data.get("compensation_bands", pd.DataFrame())
 # Sidebar Filters
 with st.sidebar:
     st.markdown("### 🎛️ Analysis Filters")
-    roles = ["All"] + sorted(df_emp["role_name"].dropna().unique().tolist()) if not df_emp.empty else ["All"]
+    role_col = "role_name" if "role_name" in df_emp.columns else ("role_id" if "role_id" in df_emp.columns else None)
+    roles = ["All"] + sorted(df_emp[role_col].dropna().unique().tolist()) if role_col and not df_emp.empty else ["All"]
     selected_role = st.selectbox("Role", roles)
 
     levels = ["All"] + ["L1", "L2", "L3", "L4", "L5", "L6", "M1", "M2", "M3", "M4"]
     selected_level = st.selectbox("Career Level", levels)
 
-    locations = ["All"] + sorted(df_emp["location_code"].dropna().unique().tolist()) if not df_emp.empty else ["All"]
+    loc_col = "location_code" if "location_code" in df_emp.columns else ("location_id" if "location_id" in df_emp.columns else None)
+    locations = ["All"] + sorted(df_emp[loc_col].dropna().unique().tolist()) if loc_col and not df_emp.empty else ["All"]
     selected_loc = st.selectbox("Location", locations)
 
     emp_types = ["All", "FULL_TIME", "PART_TIME"]
@@ -54,13 +56,13 @@ with st.sidebar:
 
 # Filter cohort
 filtered_emp = df_emp.copy()
-if selected_role != "All":
-    filtered_emp = filtered_emp[filtered_emp["role_name"] == selected_role]
-if selected_level != "All":
+if role_col and selected_role != "All":
+    filtered_emp = filtered_emp[filtered_emp[role_col] == selected_role]
+if "level_code" in filtered_emp.columns and selected_level != "All":
     filtered_emp = filtered_emp[filtered_emp["level_code"] == selected_level]
-if selected_loc != "All":
-    filtered_emp = filtered_emp[filtered_emp["location_code"] == selected_loc]
-if selected_emp_type != "All":
+if loc_col and selected_loc != "All":
+    filtered_emp = filtered_emp[filtered_emp[loc_col] == selected_loc]
+if "employment_type" in filtered_emp.columns and selected_emp_type != "All":
     filtered_emp = filtered_emp[filtered_emp["employment_type"] == selected_emp_type]
 
 latest_sal = (
@@ -92,8 +94,10 @@ st.markdown("---")
 st.markdown("### ⚠️ Cohort Out-of-Band Exceptions (<80% or >120%)")
 st.caption("Employees whose compensation falls outside the standard 80%–120% market midpoint corridor.")
 
+desired_emp_cols = ["employee_id", "full_name", "role_name", "level_code", "location_code", "employment_type", "fte_fraction"]
+avail_emp_cols = [c for c in desired_emp_cols if c in filtered_emp.columns]
 merged_details = latest_sal.merge(
-    filtered_emp[["employee_id", "full_name", "role_name", "level_code", "location_code", "employment_type", "fte_fraction"]],
+    filtered_emp[avail_emp_cols],
     on="employee_id"
 )
 merged_details = merged_details.merge(

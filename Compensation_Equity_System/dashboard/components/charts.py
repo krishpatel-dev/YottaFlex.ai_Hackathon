@@ -47,13 +47,13 @@ def base_layout(fig: go.Figure, title: str = "", height: int = 400) -> go.Figure
             showgrid=True,
             gridcolor=PALETTE["grid_color"],
             zeroline=False,
-            titlefont=dict(size=12, color=PALETTE["text_dark"]),
+            title=dict(font=dict(size=12, color=PALETTE["text_dark"])),
         ),
         yaxis=dict(
             showgrid=True,
             gridcolor=PALETTE["grid_color"],
             zeroline=False,
-            titlefont=dict(size=12, color=PALETTE["text_dark"]),
+            title=dict(font=dict(size=12, color=PALETTE["text_dark"])),
         ),
         legend=dict(
             orientation="h",

@@ -36,7 +36,7 @@ df_promo = data.get("promotions", pd.DataFrame())
 
 # Employee Search & Multi-Select
 emp_options = df_emp.apply(
-    lambda r: f"{r['employee_id']} - {r['full_name']} ({r['role_name']}, {r['level_code']})",
+    lambda r: f"{r['employee_id']} - {r.get('full_name', 'Employee')} ({r.get('role_name', r.get('role_id', 'Role'))}, {r.get('level_code', r.get('level_id', 'Level'))})",
     axis=1
 ).tolist() if not df_emp.empty else []
 
@@ -81,26 +81,26 @@ else:
 
         profile = {
             "employee_id": eid,
-            "full_name": emp["full_name"],
-            "role_name": emp["role_name"],
-            "role_family": emp["role_family"],
-            "level_code": emp["level_code"],
-            "location_code": emp["location_code"],
-            "employment_type": emp["employment_type"],
-            "fte_fraction": float(emp.get("fte_fraction", 1.0)),
-            "hire_date": emp["hire_date"],
-            "annual_salary_raw": float(sal.get("annual_salary", 0)),
-            "annual_salary_fte": float(sal.get("annual_salary_fte", 0)),
+            "full_name": emp.get("full_name", eid),
+            "role_name": emp.get("role_name", emp.get("role_id", "N/A")),
+            "role_family": emp.get("role_family", "N/A"),
+            "level_code": emp.get("level_code", emp.get("level_id", "N/A")),
+            "location_code": emp.get("location_code", emp.get("location_id", "N/A")),
+            "employment_type": emp.get("employment_type", "FULL_TIME"),
+            "fte_fraction": float(emp.get("fte_fraction", 1.0) or 1.0),
+            "hire_date": emp.get("hire_date", "2024-01-01"),
+            "annual_salary_raw": float(sal.get("annual_salary", 0) or 0),
+            "annual_salary_fte": float(sal.get("annual_salary_fte", 0) or 0),
             "currency_code": sal.get("currency_code", "INR"),
             "band_id": band_id,
-            "band_min": float(band.get("band_min", 0)),
-            "band_mid": float(band.get("band_mid", 0)),
-            "band_max": float(band.get("band_max", 0)),
-            "compa_ratio": float(sal.get("compa_ratio", 100.0)),
-            "perf_rating": float(latest_p.get("rating", 3.0)),
+            "band_min": float(band.get("band_min", 0) or 0),
+            "band_mid": float(band.get("band_mid", 0) or 0),
+            "band_max": float(band.get("band_max", 0) or 0),
+            "compa_ratio": float(sal.get("compa_ratio", 100.0) or 100.0),
+            "perf_rating": float(latest_p.get("rating", 3.0) or 3.0),
             "perf_label": latest_p.get("rating_label", "MEETS"),
             "perf_factors": latest_p.get("documented_factors", "[]"),
-            "months_in_company": int(ten.get("months_in_company", 12)),
+            "months_in_company": int(ten.get("months_in_company", 12) or 12),
             "tenure_band": ten.get("tenure_band", "1-3YR"),
             "promotions_count": promo_count,
         }

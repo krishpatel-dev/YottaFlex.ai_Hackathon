@@ -83,12 +83,18 @@ if search_term:
 st.caption(f"Showing **{len(filtered):,}** matching exception records.")
 
 # Main Interactive Exceptions Table
-display_df = filtered[[
+if "root_cause" not in filtered.columns:
+    filtered["root_cause"] = filtered.get("detection_rule", "Disparity detected")
+
+display_cols = [
     "flag_id", "employee_id", "issue_type", "severity", "salary_difference",
     "disparity_pct", "investigation_status", "root_cause"
-]].copy()
-display_df["salary_difference"] = display_df["salary_difference"].apply(format_inr)
-display_df["disparity_pct"] = display_df["disparity_pct"].apply(lambda x: f"{x:.1f}%")
+]
+display_df = filtered[[c for c in display_cols if c in filtered.columns]].copy()
+if "salary_difference" in display_df.columns:
+    display_df["salary_difference"] = display_df["salary_difference"].apply(format_inr)
+if "disparity_pct" in display_df.columns:
+    display_df["disparity_pct"] = display_df["disparity_pct"].apply(lambda x: f"{x:.1f}%" if pd.notna(x) else "0.0%")
 
 render_styled_dataframe(display_df, height=350)
 
@@ -104,21 +110,21 @@ selected_flag_id = st.selectbox(
 
 if selected_flag_id != "None" and not filtered.empty:
     record = filtered[filtered["flag_id"] == selected_flag_id].iloc[0]
-    emp_id = record["employee_id"]
+    emp_id = record.get("employee_id", "Unknown")
 
     c1, c2 = st.columns([1, 1])
 
     with c1:
-        st.markdown(f"#### 📄 Exception Details: `{record['flag_id']}`")
+        st.markdown(f"#### 📄 Exception Details: `{record.get('flag_id')}`")
         st.markdown(f"""
         - **Target Employee:** `{emp_id}`
-        - **Exception Category:** `{record['issue_type']}`
-        - **Severity Rating:** `{record['severity']}`
-        - **Detection Rule:** `{record['detection_rule']}`
-        - **Detection Timestamp:** `{record['detection_timestamp']}`
-        - **Current Status:** `{record['investigation_status']}`
-        - **Root Cause Analysis:** {record['root_cause']}
-        - **Expected System Response:** {record['expected_response']}
+        - **Exception Category:** `{record.get('issue_type')}`
+        - **Severity Rating:** `{record.get('severity')}`
+        - **Detection Rule:** `{record.get('detection_rule')}`
+        - **Detection Timestamp:** `{record.get('detection_timestamp')}`
+        - **Current Status:** `{record.get('investigation_status')}`
+        - **Root Cause Analysis:** {record.get('root_cause', record.get('detection_rule', 'N/A'))}
+        - **Expected System Response:** {record.get('expected_response', 'N/A')}
         """)
 
         # Supporting Evidence JSON

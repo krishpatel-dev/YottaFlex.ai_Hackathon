@@ -42,18 +42,20 @@ df_bands = data.get("compensation_bands", pd.DataFrame())
 # Sidebar Filters
 with st.sidebar:
     st.markdown("### 🔍 Global Filters")
-    loc_options = ["All"] + sorted(df_emp["location_code"].dropna().unique().tolist()) if not df_emp.empty else ["All"]
+    loc_col = "location_code" if "location_code" in df_emp.columns else ("location_id" if "location_id" in df_emp.columns else None)
+    loc_options = ["All"] + sorted(df_emp[loc_col].dropna().unique().tolist()) if loc_col and not df_emp.empty else ["All"]
     selected_loc = st.selectbox("Location", loc_options)
 
-    fam_options = ["All"] + sorted(df_emp["role_family"].dropna().unique().tolist()) if not df_emp.empty else ["All"]
+    fam_col = "role_family" if "role_family" in df_emp.columns else None
+    fam_options = ["All"] + sorted(df_emp[fam_col].dropna().unique().tolist()) if fam_col and not df_emp.empty else ["All"]
     selected_fam = st.selectbox("Role Family", fam_options)
 
 # Filter data
 filtered_emp = df_emp.copy()
-if selected_loc != "All":
-    filtered_emp = filtered_emp[filtered_emp["location_code"] == selected_loc]
-if selected_fam != "All":
-    filtered_emp = filtered_emp[filtered_emp["role_family"] == selected_fam]
+if loc_col and selected_loc != "All":
+    filtered_emp = filtered_emp[filtered_emp[loc_col] == selected_loc]
+if fam_col and selected_fam != "All":
+    filtered_emp = filtered_emp[filtered_emp[fam_col] == selected_fam]
 
 filtered_sal = df_sal[df_sal["employee_id"].isin(filtered_emp["employee_id"])] if not df_sal.empty else df_sal
 

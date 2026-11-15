@@ -146,6 +146,19 @@ also added the remote git repo, so give commits and push it
 
 ---
 
+### Prompt 6: Dashboard Run Diagnostics & Plotly Attribute Error
+* **Timestamp:** 2026-11-15T15:00:20+05:30
+* **Goal:** Diagnose runtime crashes when launching Streamlit (`streamlit run dashboard/app.py`), specifically the Plotly `titlefont` deprecation, missing `root_cause` column mapping, and terminal cmdlet path issue.
+* **Full Prompt Text:**
+```text
+error?
+[Screenshot of PowerShell: 'streamlit : The term streamlit is not recognized as the name of a cmdlet...']
+:class:`plotly.graph_objects.layout.xaxis.Minor`
+[Traceback snippet: ValueError: Invalid property specified for object of type plotly.graph_objs.layout.XAxis: 'titlefont']
+```
+
+---
+
 ## 3. Where AI Accelerated Development
 
 1. **Relational Schema Boilerplate**: AI generated complete, typed SQLAlchemy 2.0 ORM models and DDL SQL for 12 normalized tables with extensive foreign keys, checks, and comments.
@@ -174,3 +187,11 @@ AI was not relied upon blindly. Several critical bugs, mathematical mismatches, 
 4. **Approval State Machine Governance**:
    - *Problem*: Ensuring that unauthorized salary adjustments (`ADJUSTMENT_WITHOUT_APPROVAL`) are strictly blocked at the business logic layer.
    - *Human Resolution*: Built an explicit `ProposalStateMachine` in `src/engine/adjustment_engine.py` requiring both Manager and HR Partner approval before a proposal can reach `IMPLEMENTED`.
+
+5. **Plotly Modern API Deprecation (`titlefont` → `title=dict(font=...)`)**:
+   - *Problem*: In Plotly v5/v6+, passing `titlefont` directly to `xaxis` or `yaxis` dictionaries raises `ValueError: Invalid property specified for object of type plotly.graph_objs.layout.XAxis: 'titlefont'`.
+   - *Human Resolution*: Replaced all legacy `titlefont=dict(...)` constructs in `dashboard/components/charts.py` with standard `title=dict(font=dict(...))`.
+
+6. **Transactional CSV Schema Mappings & Graceful Analytics Enrichment**:
+   - *Problem*: `employees.csv` was located in `data/transactions/` while the loader looked in `data/master/`, returning 0 rows; moreover, page 4 (`disparity_flags.csv`) and page 5 (`adjustment_proposals.csv`) accessed un-denormalized fields like `root_cause` and `proposed_change_pct`.
+   - *Human Resolution*: Updated `data_loader.py` with dual-folder path resolution, automatically enriched `data["employees"]` with normalized role/level/location metadata, derived `root_cause` and `proposed_change_pct` dynamically, and added defensive column guards across all 5 dashboard views.
