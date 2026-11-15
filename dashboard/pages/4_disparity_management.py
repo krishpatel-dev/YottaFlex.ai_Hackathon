@@ -22,14 +22,14 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from dashboard.utils.data_loader import load_all_data
 from dashboard.components.kpi_cards import render_kpi_row
-from dashboard.components.styles import inject_custom_css
+from dashboard.components.styles import inject_custom_css, render_html
 from dashboard.components.tables import format_inr, render_styled_dataframe
 
 # Apply unified design system
 inject_custom_css()
 
 # Header (Inspired by Toota / Block AI)
-st.markdown("""
+render_html("""
 <div style="margin-bottom: 22px;">
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div>
@@ -49,7 +49,7 @@ st.markdown("""
         </div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 data = load_all_data()
 df_flags = data.get("disparity_flags", pd.DataFrame())
@@ -84,7 +84,7 @@ card_configs = [
 for idx, cfg in enumerate(card_configs):
     count = len(df_flags[df_flags["issue_type"] == cfg["type"]])
     with summary_cols[idx]:
-        st.markdown(f"""
+        render_html(f"""
         <div class="glass-card" style="padding: 14px 16px; margin-bottom: 16px; border-top: 3px solid {cfg['color']};">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                 <span style="font-size: 0.72rem; font-weight: 700; color: #64748B; text-transform: uppercase;">{cfg['label']}</span>
@@ -93,10 +93,10 @@ for idx, cfg in enumerate(card_configs):
             <div style="font-size: 1.55rem; font-weight: 800; color: #0F172A; margin: 2px 0;">{count:,}</div>
             <span class="metric-badge {cfg['badge']}" style="padding: 2px 6px; font-size: 0.68rem;">Active Cases</span>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
 # Filters & Search Card
-st.markdown("""<div class="glass-card" style="padding: 18px 20px 10px 20px;">""", unsafe_allow_html=True)
+render_html("""<div class="glass-card" style="padding: 18px 20px 10px 20px;">""")
 col_f1, col_f2, col_f3 = st.columns(3)
 with col_f1:
     type_filter = st.selectbox("Filter by Exception Category", ["All"] + issue_types)
@@ -106,7 +106,7 @@ with col_f3:
     status_filter = st.selectbox("Investigation Status", ["All", "OPEN", "UNDER_REVIEW", "RESOLVED", "DISMISSED"])
 
 search_term = st.text_input("🔍 Search by Flag ID or Employee ID:", "")
-st.markdown("</div>", unsafe_allow_html=True)
+render_html("</div>")
 
 filtered = df_flags.copy()
 if type_filter != "All":
@@ -123,7 +123,7 @@ if search_term:
     ]
 
 # Main Interactive Exceptions Table
-st.markdown(f"""
+render_html(f"""
 <div class="glass-card" style="margin-top: 10px;">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
         <div style="display: flex; align-items: center; gap: 8px;">
@@ -135,7 +135,7 @@ st.markdown(f"""
         </div>
         <span class="metric-badge badge-info">Auditable Ledger</span>
     </div>
-""", unsafe_allow_html=True)
+""")
 
 if "root_cause" not in filtered.columns:
     filtered["root_cause"] = filtered.get("detection_rule", "Disparity detected")
@@ -151,14 +151,14 @@ if "disparity_pct" in display_df.columns:
     display_df["disparity_pct"] = display_df["disparity_pct"].apply(lambda x: f"{x:.1f}%" if pd.notna(x) else "0.0%")
 
 render_styled_dataframe(display_df, height=350)
-st.markdown("</div>", unsafe_allow_html=True)
+render_html("</div>")
 
 # Deep-Dive Investigation Panel
-st.markdown("""
+render_html("""
 <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 20px 0 12px 0;">
     🔎 Investigation & Remediation Console
 </div>
-""", unsafe_allow_html=True)
+""")
 
 selected_flag_id = st.selectbox(
     "Select an Exception Record to Inspect & Update:",
@@ -172,7 +172,7 @@ if selected_flag_id != "None" and not filtered.empty:
     c1, c2 = st.columns([1, 1])
 
     with c1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="glass-card">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
                 <div style="font-weight: 800; font-size: 1.05rem; color: #0F172A;">📄 Exception Dossier: <code>{record.get('flag_id')}</code></div>
@@ -193,23 +193,23 @@ if selected_flag_id != "None" and not filtered.empty:
                     <div style="font-size: 0.84rem; color: #0F172A; margin-top: 2px;">{record.get('expected_response', 'N/A')}</div>
                 </div>
             </div>
-        """, unsafe_allow_html=True)
+        """)
 
-        st.markdown("<div style='font-size: 0.82rem; font-weight: 700; color: #64748B; margin-top: 10px; margin-bottom: 4px;'>SUPPORTING EVIDENCE PAYLOAD:</div>", unsafe_allow_html=True)
+        render_html("<div style='font-size: 0.82rem; font-weight: 700; color: #64748B; margin-top: 10px; margin-bottom: 4px;'>SUPPORTING EVIDENCE PAYLOAD:</div>")
         try:
             ev_json = json.loads(str(record.get("supporting_evidence", "{}")))
             st.json(ev_json)
         except Exception:
             st.code(str(record.get("supporting_evidence", "")))
-        st.markdown("</div>", unsafe_allow_html=True)
+        render_html("</div>")
 
     with c2:
-        st.markdown("""
+        render_html("""
         <div class="glass-card">
             <div style="font-weight: 800; font-size: 1.05rem; color: #0F172A; margin-bottom: 12px;">
                 ✍️ Update Investigation State
             </div>
-        """, unsafe_allow_html=True)
+        """)
 
         curr_status = record.get("investigation_status", "OPEN")
         status_opts = ["OPEN", "UNDER_REVIEW", "RESOLVED", "DISMISSED"]
@@ -232,4 +232,4 @@ if selected_flag_id != "None" and not filtered.empty:
                 st.success(f"Successfully updated {selected_flag_id} to {new_status}!")
                 st.rerun()
 
-        st.markdown("</div>", unsafe_allow_html=True)
+        render_html("</div>")

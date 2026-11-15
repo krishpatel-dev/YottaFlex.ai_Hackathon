@@ -5,12 +5,25 @@ Shared Dribbble-inspired enterprise CSS styling and layout decorators.
 Inspired by modern human capital management dashboards (HRoom, Block AI, Toota).
 """
 
+import re
 import streamlit as st
+
+
+def render_html(html_str: str) -> None:
+    """
+    Safely render HTML without Markdown converting indented lines to code blocks.
+    Removes leading whitespace from all lines and strips HTML comments.
+    """
+    if not html_str:
+        return
+    cleaned = re.sub(r'<!--.*?-->', '', html_str, flags=re.DOTALL)
+    cleaned = re.sub(r'^[ \t]+', '', cleaned, flags=re.MULTILINE).strip()
+    st.markdown(cleaned, unsafe_allow_html=True)
 
 
 def inject_custom_css() -> None:
     """Inject modern enterprise theme styles across all dashboard pages."""
-    st.markdown("""
+    css = """
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -148,4 +161,5 @@ def inject_custom_css() -> None:
             margin-bottom: 20px;
         }
     </style>
-    """, unsafe_allow_html=True)
+    """
+    render_html(css)

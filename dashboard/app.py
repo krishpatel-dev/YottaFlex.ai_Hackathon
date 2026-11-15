@@ -19,7 +19,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from dashboard.utils.data_loader import load_all_data, compute_live_metrics
 from dashboard.components.kpi_cards import render_kpi_row
-from dashboard.components.styles import inject_custom_css
+from dashboard.components.styles import inject_custom_css, render_html
 
 st.set_page_config(
     page_title="Compensation Intelligence | Pay Equity Analytics",
@@ -33,7 +33,7 @@ inject_custom_css()
 
 # Sidebar Branding & Navigation
 with st.sidebar:
-    st.markdown("""
+    render_html("""
     <div style="padding: 10px 0 16px 0;">
         <div style="display: flex; align-items: center; gap: 10px;">
             <div style="background: #2563EB; color: white; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800;">
@@ -45,14 +45,14 @@ with st.sidebar:
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
     st.divider()
 
-    st.markdown("""
+    render_html("""
     <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">
         Core Audit Modules
     </div>
-    """, unsafe_allow_html=True)
+    """)
     st.markdown("""
     - **1. Executive Overview**: Macro distributions & parity corridor
     - **2. Compensation Analysis**: Granular role, level & city benchmarks
@@ -62,7 +62,7 @@ with st.sidebar:
     """)
 
     st.divider()
-    st.markdown("""
+    render_html("""
     <div style="background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 12px 14px;">
         <div style="font-size: 0.75rem; font-weight: 700; color: #60A5FA; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
             Auditing Principle
@@ -71,10 +71,10 @@ with st.sidebar:
             Disparities trigger human review workflows. Statistical variance does not automatically conclude discrimination.
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
-# Main Welcome Header (Inspired by Block AI / HRoom)
-st.markdown("""
+# Main Welcome Header
+render_html("""
 <div style="margin-bottom: 24px;">
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div>
@@ -94,7 +94,7 @@ st.markdown("""
         </div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 # Data Loading with spinner
 with st.spinner("Synchronizing compensation telemetry and calculating parity corridors..."):
@@ -102,47 +102,40 @@ with st.spinner("Synchronizing compensation telemetry and calculating parity cor
     metrics = compute_live_metrics(data)
 
 # Primary Executive KPI Row (4 Top Cards)
-col_kpi1, col_kpi2, col_kpi3, col_kpi4 = st.columns(4)
-
-with col_kpi1:
-    st.markdown(render_kpi_row([{
+render_kpi_row([
+    {
         "title": "Active Workforce",
         "value": f"{metrics.get('total_employees', 5000):,}",
         "subtitle": "13 Global Business Locations",
         "color": "#3B82F6",
         "icon": "👥",
         "delta": "100% active",
-    }]), unsafe_allow_html=True)
-
-with col_kpi2:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Avg Compa-Ratio",
         "value": f"{metrics.get('avg_compa_ratio', 100.0):.1f}%",
         "subtitle": "Parity Corridor: 80% – 120%",
         "color": "#10B981",
         "icon": "🎯",
         "delta": "Compliant",
-    }]), unsafe_allow_html=True)
-
-with col_kpi3:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Below Band (<80%)",
         "value": f"{metrics.get('below_band_count', 355):,}",
         "subtitle": "Requires Upward Correction",
         "color": "#EF4444",
         "icon": "🔻",
         "delta": "Risk Cohort",
-    }]), unsafe_allow_html=True)
-
-with col_kpi4:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Flagged Disparities",
         "value": f"{metrics.get('disparity_count', 1258):,}",
         "subtitle": "Unexplained Equity Exceptions",
         "color": "#F59E0B",
         "icon": "⚠️",
         "delta": "Audit Queue",
-    }]), unsafe_allow_html=True)
+    },
+])
 
 st.write("")
 
@@ -151,7 +144,7 @@ sec_col1, sec_col2, sec_col3 = st.columns(3)
 
 with sec_col1:
     within_cnt = metrics.get('within_band_count', 2726)
-    st.markdown(f"""
+    render_html(f"""
     <div class="glass-card" style="padding: 16px 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 0.8rem; font-weight: 700; color: #1E293B;">Within-Band Compliant (80–120%)</span>
@@ -162,11 +155,11 @@ with sec_col1:
         </div>
         <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">{(within_cnt/5000)*100:.1f}% of total active workforce compliant with compensation bands.</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 with sec_col2:
     above_cnt = metrics.get('above_band_count', 2669)
-    st.markdown(f"""
+    render_html(f"""
     <div class="glass-card" style="padding: 16px 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 0.8rem; font-weight: 700; color: #1E293B;">Market Premium Cohort (>120%)</span>
@@ -177,11 +170,11 @@ with sec_col2:
         </div>
         <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">Top-tier performers & specialized market skills compensated above midpoint.</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 with sec_col3:
     pending_p = metrics.get('pending_proposals', 70)
-    st.markdown(f"""
+    render_html(f"""
     <div class="glass-card" style="padding: 16px 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 0.8rem; font-weight: 700; color: #1E293B;">Pending Governance Proposals</span>
@@ -192,13 +185,13 @@ with sec_col3:
         </div>
         <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">156 total remediation proposals created; dual-approval pipeline active.</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 # Deep-Dive Section Cards (Dribbble 2-Column Split)
 col_org, col_safe = st.columns([1, 1])
 
 with col_org:
-    st.markdown("""
+    render_html("""
     <div class="glass-card">
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
             <span style="font-size: 1.25rem;">🏢</span>
@@ -237,10 +230,10 @@ with col_org:
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 with col_safe:
-    st.markdown("""
+    render_html("""
     <div class="glass-card">
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
             <span style="font-size: 1.25rem;">🛡️</span>
@@ -252,42 +245,42 @@ with col_safe:
                     <div style="font-size: 0.82rem; font-weight: 700; color: #991B1B;">1. Expired Band Benchmark Protection</div>
                     <div style="font-size: 0.74rem; color: #B91C1C;">Blocks salary comparisons evaluated against obsolete market bands.</div>
                 </div>
-                <span class="metric-badge badge-danger">21 Injected / Blocked</span>
+                <span class="metric-badge badge-danger">15 Injected / Blocked</span>
             </div>
             <div style="background: #FFFBEB; border: 1px solid #FEF3C7; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
                     <div style="font-size: 0.82rem; font-weight: 700; color: #92400E;">2. FTE Pro-Rata Scaling Verification</div>
                     <div style="font-size: 0.74rem; color: #B45309;">Normalizes part-time employee compensation to full-time equivalent basis.</div>
                 </div>
-                <span class="metric-badge badge-warning">21 Injected / Scaled</span>
+                <span class="metric-badge badge-warning">30 Injected / Scaled</span>
             </div>
             <div style="background: #FEF2F2; border: 1px solid #FEE2E2; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
                     <div style="font-size: 0.82rem; font-weight: 700; color: #991B1B;">3. FX Currency Normalization Gate</div>
                     <div style="font-size: 0.74rem; color: #B91C1C;">Enforces currency conversions to INR across global talent locations.</div>
                 </div>
-                <span class="metric-badge badge-danger">21 Injected / Fixed</span>
+                <span class="metric-badge badge-danger">20 Injected / Fixed</span>
             </div>
             <div style="background: #FEF2F2; border: 1px solid #FEE2E2; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
                     <div style="font-size: 0.82rem; font-weight: 700; color: #991B1B;">4. Unauthorized Payroll Adjustment Control</div>
                     <div style="font-size: 0.74rem; color: #B91C1C;">Strictly prevents payroll modification without Manager & HR dual-signoff.</div>
                 </div>
-                <span class="metric-badge badge-danger">21 Injected / Blocked</span>
+                <span class="metric-badge badge-danger">25 Injected / Blocked</span>
             </div>
             <div style="background: #FFFBEB; border: 1px solid #FEF3C7; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
                     <div style="font-size: 0.82rem; font-weight: 700; color: #92400E;">5. Incomparable Role Clustering Guard</div>
                     <div style="font-size: 0.74rem; color: #B45309;">Prevents invalid peer grouping across distinct job families.</div>
                 </div>
-                <span class="metric-badge badge-warning">21 Injected / Flagged</span>
+                <span class="metric-badge badge-warning">15 Injected / Flagged</span>
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
-st.markdown("""
+render_html("""
 <div style="text-align: center; color: #94A3B8; font-size: 0.78rem; margin-top: 24px; padding-top: 12px; border-top: 1px solid #E2E8F0;">
     Compensation Intelligence & Pay Equity Analytics Platform • Built with Python 3.11+, Streamlit, Plotly & SQLAlchemy • Seed: <code>20261022</code>
 </div>
-""", unsafe_allow_html=True)
+""")

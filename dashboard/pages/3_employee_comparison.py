@@ -21,14 +21,14 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from dashboard.utils.data_loader import load_all_data
 from dashboard.components.charts import employee_comparison_radar
-from dashboard.components.styles import inject_custom_css
+from dashboard.components.styles import inject_custom_css, render_html
 from dashboard.components.tables import format_inr
 
 # Apply unified design system
 inject_custom_css()
 
 # Header (Inspired by Toota / Block AI)
-st.markdown("""
+render_html("""
 <div style="margin-bottom: 22px;">
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div>
@@ -48,7 +48,7 @@ st.markdown("""
         </div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 data = load_all_data()
 df_emp = data.get("employees", pd.DataFrame())
@@ -135,15 +135,14 @@ else:
             "relative_peer_pct": min(100, (profile["compa_ratio"] / 120.0) * 100),
         })
 
-    st.markdown("""
+    render_html("""
     <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 18px 0 12px 0;">
         Side-by-Side Employee Dossier
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     cols = st.columns(len(profiles))
 
-    # Avatar gradients
     avatar_gradients = [
         "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
         "linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)",
@@ -162,74 +161,67 @@ else:
         cr_badge_class = "badge-success" if 80 <= p["compa_ratio"] <= 120 else ("badge-danger" if p["compa_ratio"] < 80 else "badge-purple")
         cr_status_text = "Midpoint Parity" if 80 <= p["compa_ratio"] <= 120 else ("Below Band" if p["compa_ratio"] < 80 else "Market Premium")
 
+        card_html = (
+            f'<div class="glass-card" style="padding: 20px; position: relative; border-top: 4px solid #3B82F6;">'
+            f'<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">'
+            f'<div style="width: 44px; height: 44px; border-radius: 12px; background: {grad}; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">{initials}</div>'
+            f'<div>'
+            f'<div style="font-weight: 800; font-size: 1.15rem; color: #0F172A; line-height: 1.2;">{p["full_name"]}</div>'
+            f'<div style="font-size: 0.78rem; color: #64748B;"><code>{p["employee_id"]}</code> • {p["role_name"]}</div>'
+            f'</div>'
+            f'</div>'
+            f'<div style="margin: 14px 0 10px 0; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">'
+            f'<div style="font-size: 0.72rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em;">FTE Normalized Compensation</div>'
+            f'<div style="font-size: 1.7rem; font-weight: 800; color: #0F172A; margin: 2px 0 6px 0;">{format_inr(p["annual_salary_fte"])}</div>'
+            f'<div style="display: flex; align-items: center; gap: 8px;">'
+            f'<span class="metric-badge {cr_badge_class}">{p["compa_ratio"]:.1f}% Compa-Ratio</span>'
+            f'<span style="font-size: 0.75rem; color: #64748B;">{cr_status_text}</span>'
+            f'</div>'
+            f'</div>'
+            f'<div style="margin-bottom: 16px;">'
+            f'<div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748B; margin-bottom: 4px;">'
+            f'<span>Band Min ({format_inr(b_min)})</span>'
+            f'<span style="font-weight: 700; color: #1E293B;">Penetration: {penetration_pct:.0f}%</span>'
+            f'<span>Max ({format_inr(b_max)})</span>'
+            f'</div>'
+            f'<div style="background: #E2E8F0; border-radius: 6px; height: 6px; overflow: hidden;">'
+            f'<div style="background: linear-gradient(90deg, #3B82F6, #10B981); width: {penetration_pct:.1f}%; height: 100%;"></div>'
+            f'</div>'
+            f'</div>'
+            f'<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem;">'
+            f'<div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 0.7rem; color: #64748B;">Level & Location</div>'
+            f'<div style="font-weight: 700; color: #0F172A;">{p["level_code"]} • {p["location_code"]}</div>'
+            f'</div>'
+            f'<div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 0.7rem; color: #64748B;">Employment Type</div>'
+            f'<div style="font-weight: 700; color: #0F172A;">{p["employment_type"]} ({p["fte_fraction"]:.1f} FTE)</div>'
+            f'</div>'
+            f'<div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 0.7rem; color: #64748B;">Tenure</div>'
+            f'<div style="font-weight: 700; color: #0F172A;">{p["months_in_company"]} mos ({p["tenure_band"]})</div>'
+            f'</div>'
+            f'<div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">'
+            f'<div style="font-size: 0.7rem; color: #64748B;">Performance</div>'
+            f'<div style="font-weight: 700; color: #0F172A;">⭐ {p["perf_rating"]:.1f} ({p["perf_label"]})</div>'
+            f'</div>'
+            f'</div>'
+            f'<div style="margin-top: 10px; font-size: 0.76rem; color: #64748B; display: flex; justify-content: space-between;">'
+            f'<span>Promotions: <b>{p["promotions_count"]}</b></span>'
+            f'<span>Market Mid: <b>{format_inr(p["band_mid"])}</b></span>'
+            f'</div>'
+            f'</div>'
+        )
         with col:
-            st.markdown(f"""
-            <div class="glass-card" style="padding: 20px; position: relative; border-top: 4px solid #3B82F6;">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: {grad}; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                        {initials}
-                    </div>
-                    <div>
-                        <div style="font-weight: 800; font-size: 1.15rem; color: #0F172A; line-height: 1.2;">{p['full_name']}</div>
-                        <div style="font-size: 0.78rem; color: #64748B;"><code>{p['employee_id']}</code> • {p['role_name']}</div>
-                    </div>
-                </div>
-
-                <div style="margin: 14px 0 10px 0; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
-                    <div style="font-size: 0.72rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em;">FTE Normalized Compensation</div>
-                    <div style="font-size: 1.7rem; font-weight: 800; color: #0F172A; margin: 2px 0 6px 0;">{format_inr(p['annual_salary_fte'])}</div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span class="metric-badge {cr_badge_class}">{p['compa_ratio']:.1f}% Compa-Ratio</span>
-                        <span style="font-size: 0.75rem; color: #64748B;">{cr_status_text}</span>
-                    </div>
-                </div>
-
-                <!-- Band Penetration Bar -->
-                <div style="margin-bottom: 16px;">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748B; margin-bottom: 4px;">
-                        <span>Band Min ({format_inr(b_min)})</span>
-                        <span style="font-weight: 700; color: #1E293B;">Penetration: {penetration_pct:.0f}%</span>
-                        <span>Max ({format_inr(b_max)})</span>
-                    </div>
-                    <div style="background: #E2E8F0; border-radius: 6px; height: 6px; overflow: hidden;">
-                        <div style="background: linear-gradient(90deg, #3B82F6, #10B981); width: {penetration_pct:.1f}%; height: 100%;"></div>
-                    </div>
-                </div>
-
-                <!-- Key Attribute Grid -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem;">
-                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                        <div style="font-size: 0.7rem; color: #64748B;">Level & Location</div>
-                        <div style="font-weight: 700; color: #0F172A;">{p['level_code']} • {p['location_code']}</div>
-                    </div>
-                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                        <div style="font-size: 0.7rem; color: #64748B;">Employment Type</div>
-                        <div style="font-weight: 700; color: #0F172A;">{p['employment_type']} ({p['fte_fraction']:.1f} FTE)</div>
-                    </div>
-                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                        <div style="font-size: 0.7rem; color: #64748B;">Tenure</div>
-                        <div style="font-weight: 700; color: #0F172A;">{p['months_in_company']} mos ({p['tenure_band']})</div>
-                    </div>
-                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
-                        <div style="font-size: 0.7rem; color: #64748B;">Performance</div>
-                        <div style="font-weight: 700; color: #0F172A;">⭐ {p['perf_rating']:.1f} ({p['perf_label']})</div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 10px; font-size: 0.76rem; color: #64748B; display: flex; justify-content: space-between;">
-                    <span>Promotions: <b>{p['promotions_count']}</b></span>
-                    <span>Market Mid: <b>{format_inr(p['band_mid'])}</b></span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            render_html(card_html)
 
     # Radar Comparison Chart & Evaluation Split
     col_chart, col_eval = st.columns([1, 1])
 
     with col_chart:
-        st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+        render_html("""<div class="plotly-card">""")
         st.plotly_chart(employee_comparison_radar(radar_data), width="stretch")
-        st.markdown("</div>", unsafe_allow_html=True)
+        render_html("</div>")
 
     with col_eval:
         pA, pB = profiles[0], profiles[1]
@@ -242,17 +234,17 @@ else:
         same_loc = (pA["location_code"] == pB["location_code"])
         same_tenure = (pA["tenure_band"] == pB["tenure_band"])
 
-        # Comparability Card
-        st.markdown(f"""
+        comparable_badge = "badge-success" if (same_role and same_level and same_loc) else "badge-warning"
+        comparable_label = "Comparable Cohort" if (same_role and same_level and same_loc) else "Incomparable Baseline"
+
+        render_html(f"""
         <div class="glass-card" style="margin-bottom: 14px;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <span style="font-size: 1.15rem;">⚖️</span>
                     <span style="font-weight: 800; font-size: 1rem; color: #0F172A;">Peer Comparability Audit</span>
                 </div>
-                <span class="metric-badge {'badge-success' if (same_role and same_level and same_loc) else 'badge-warning'}">
-                    {'Comparable Cohort' if (same_role and same_level and same_loc) else 'Incomparable Baseline'}
-                </span>
+                <span class="metric-badge {comparable_badge}">{comparable_label}</span>
             </div>
             <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
                 <div style="font-size: 0.74rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Observed Salary Delta</div>
@@ -260,7 +252,7 @@ else:
                     <b>{higher_emp['full_name']}</b> earns <span style="color: #2563EB;">+{format_inr(sal_diff)}</span> more than <b>{lower_emp['full_name']}</b>
                 </div>
             </div>
-        """, unsafe_allow_html=True)
+        """)
 
         if same_role and same_level and same_loc:
             st.success("✅ **Directly Comparable Peers**: Both individuals share identical role families, career levels, and business locations.")
@@ -271,7 +263,7 @@ else:
             if not same_loc: reasons.append(f"Different business locations ({pA['location_code']} vs {pB['location_code']})")
             st.warning(f"⚠️ **Incomparable Baseline Factors**: {'; '.join(reasons)}.")
 
-        st.markdown("</div>", unsafe_allow_html=True)
+        render_html("</div>")
 
         # Documented Justification Card
         justifications = []
@@ -282,7 +274,7 @@ else:
         if higher_emp["months_in_company"] > lower_emp["months_in_company"] + 12:
             justifications.append(f"Tenured Service: {higher_emp['months_in_company']} months vs {lower_emp['months_in_company']} months")
 
-        st.markdown("""
+        render_html("""
         <div class="glass-card">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -290,11 +282,11 @@ else:
                     <span style="font-weight: 800; font-size: 1rem; color: #0F172A;">Documented Equity Justification Analysis</span>
                 </div>
             </div>
-        """, unsafe_allow_html=True)
+        """)
 
         if justifications:
             st.info("💡 **Documented Explanations Identified:**\n" + "\n".join([f"- {j}" for j in justifications]))
         else:
             st.error("🚨 **POTENTIAL UNEXPLAINED DISPARITY**: No documented performance or tenure factors fully justify the compensation gap. Flagged for HR compensation partner audit.")
 
-        st.markdown("</div>", unsafe_allow_html=True)
+        render_html("</div>")

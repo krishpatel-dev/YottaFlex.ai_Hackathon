@@ -18,9 +18,9 @@ _PROJECT_ROOT = _CURRENT_DIR.parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-from dashboard.utils.data_loader import load_all_data, compute_live_metrics
+from dashboard.utils.data_loader import load_all_data
 from dashboard.components.kpi_cards import render_kpi_row
-from dashboard.components.styles import inject_custom_css
+from dashboard.components.styles import inject_custom_css, render_html
 from dashboard.components.charts import (
     compa_ratio_distribution,
     salary_distribution_histogram,
@@ -33,7 +33,7 @@ from dashboard.components.tables import format_inr, render_styled_dataframe
 inject_custom_css()
 
 # Header (Inspired by Toota / Block AI)
-st.markdown("""
+render_html("""
 <div style="margin-bottom: 22px;">
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div>
@@ -53,7 +53,7 @@ st.markdown("""
         </div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 # Load Data
 data = load_all_data()
@@ -65,11 +65,11 @@ df_bands = data.get("compensation_bands", pd.DataFrame())
 
 # Sidebar Filters
 with st.sidebar:
-    st.markdown("""
+    render_html("""
     <div style="font-size: 0.8rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;">
         🔍 Global Filters
     </div>
-    """, unsafe_allow_html=True)
+    """)
     loc_col = "location_code" if "location_code" in df_emp.columns else ("location_id" if "location_id" in df_emp.columns else None)
     loc_options = ["All"] + sorted(df_emp[loc_col].dropna().unique().tolist()) if loc_col and not df_emp.empty else ["All"]
     selected_loc = st.selectbox("Location", loc_options)
@@ -108,47 +108,40 @@ filtered_props = df_props[df_props["employee_id"].isin(filtered_emp["employee_id
 pending_props = len(filtered_props[filtered_props["final_status"] == "OPEN"])
 
 # Primary Executive KPI Row (4 Top Cards)
-col_k1, col_k2, col_k3, col_k4 = st.columns(4)
-
-with col_k1:
-    st.markdown(render_kpi_row([{
+render_kpi_row([
+    {
         "title": "Filtered Headcount",
         "value": f"{total_emp:,}",
         "subtitle": "Active Employees in Cohort",
         "color": "#3B82F6",
         "icon": "👥",
         "delta": "Live cohort",
-    }]), unsafe_allow_html=True)
-
-with col_k2:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Avg Compa-Ratio",
         "value": f"{avg_cr:.1f}%",
         "subtitle": "Market Parity Baseline: 100%",
         "color": "#10B981",
         "icon": "⚖️",
         "delta": "Parity target 80–120%",
-    }]), unsafe_allow_html=True)
-
-with col_k3:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Open Disparities",
         "value": f"{open_disparities:,}",
         "subtitle": "Exceptions Requiring HR Audit",
         "color": "#F59E0B",
         "icon": "⚠️",
         "delta": "Audit Queue",
-    }]), unsafe_allow_html=True)
-
-with col_k4:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Pending Proposals",
         "value": f"{pending_props:,}",
         "subtitle": "In Governance Pipeline",
         "color": "#6366F1",
         "icon": "📑",
         "delta": "Dual-Approval Required",
-    }]), unsafe_allow_html=True)
+    },
+])
 
 st.write("")
 
@@ -157,7 +150,7 @@ cor_c1, cor_c2, cor_c3 = st.columns(3)
 
 with cor_c1:
     pct_within = (within_band / total_emp * 100) if total_emp else 0
-    st.markdown(f"""
+    render_html(f"""
     <div class="glass-card" style="padding: 16px 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 0.82rem; font-weight: 700; color: #1E293B;">Within Band Compliant (80%–120%)</span>
@@ -168,11 +161,11 @@ with cor_c1:
         </div>
         <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">{pct_within:.1f}% of cohort compensated within target market corridor.</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 with cor_c2:
     pct_below = (below_band / total_emp * 100) if total_emp else 0
-    st.markdown(f"""
+    render_html(f"""
     <div class="glass-card" style="padding: 16px 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 0.82rem; font-weight: 700; color: #1E293B;">Below Band Corridor (&lt;80%)</span>
@@ -183,11 +176,11 @@ with cor_c2:
         </div>
         <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">{pct_below:.1f}% requires upward salary adjustment to reach band minimum.</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 with cor_c3:
     pct_above = (above_band / total_emp * 100) if total_emp else 0
-    st.markdown(f"""
+    render_html(f"""
     <div class="glass-card" style="padding: 16px 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 0.82rem; font-weight: 700; color: #1E293B;">Market Premium Cohort (&gt;120%)</span>
@@ -198,34 +191,34 @@ with cor_c3:
         </div>
         <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">{pct_above:.1f}% top performers or high-demand market specializations.</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 # Visualizations Row 1
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    render_html("""<div class="plotly-card">""")
     st.plotly_chart(compa_ratio_distribution(latest_sal), width="stretch")
-    st.markdown("</div>", unsafe_allow_html=True)
+    render_html("</div>")
 
 with col2:
-    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    render_html("""<div class="plotly-card">""")
     st.plotly_chart(salary_distribution_histogram(latest_sal), width="stretch")
-    st.markdown("</div>", unsafe_allow_html=True)
+    render_html("</div>")
 
 # Visualizations Row 2
 col3, col4 = st.columns(2)
 with col3:
-    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    render_html("""<div class="plotly-card">""")
     st.plotly_chart(salary_by_role_boxplot(latest_sal, filtered_emp), width="stretch")
-    st.markdown("</div>", unsafe_allow_html=True)
+    render_html("</div>")
 
 with col4:
-    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    render_html("""<div class="plotly-card">""")
     st.plotly_chart(salary_by_location_bar(latest_sal, filtered_emp), width="stretch")
-    st.markdown("</div>", unsafe_allow_html=True)
+    render_html("</div>")
 
 # Recent Exception Activity Table
-st.markdown("""
+render_html("""
 <div class="glass-card" style="margin-top: 10px;">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
         <div style="display: flex; align-items: center; gap: 8px;">
@@ -237,7 +230,7 @@ st.markdown("""
         </div>
         <span class="metric-badge badge-warning">Audit Telemetry</span>
     </div>
-""", unsafe_allow_html=True)
+""")
 
 if not filtered_flags.empty:
     display_flags = filtered_flags.head(15)[[
@@ -250,4 +243,4 @@ if not filtered_flags.empty:
 else:
     st.success("No active disparity exceptions detected in the selected cohort.")
 
-st.markdown("</div>", unsafe_allow_html=True)
+render_html("</div>")

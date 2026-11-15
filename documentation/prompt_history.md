@@ -202,6 +202,17 @@ Please replace `use_container_width` with `width`.
 
 ---
 
+### Prompt 6: Frontend Raw HTML & Indentation Code-Block Fix
+* **Timestamp:** 2026-11-15T16:13:56+05:30
+* **Goal:** Eliminate raw HTML code blocks appearing on frontend dashboards caused by multiline indentation in Markdown.
+* **Full Prompt Text:**
+```text
+you can clearly see there is raw code showing in the frontend side
+fix this thing
+```
+
+---
+
 ## 3. Where AI Accelerated Development
 
 1. **Relational Schema Boilerplate**: AI generated complete, typed SQLAlchemy 2.0 ORM models and DDL SQL for 12 normalized tables with extensive foreign keys, checks, and comments.
@@ -246,3 +257,7 @@ AI was not relied upon blindly. Several critical bugs, mathematical mismatches, 
 8. **UI/UX Modernization & Streamlit 1.62 Deprecation Resolution**:
    - *Problem*: Dashboard pages exhibited cramped KPI cards, plain unformatted bullet lists, zero counts across 5 exception safeguard categories, and repeated runtime console warnings (`Please replace use_container_width with width. use_container_width will be removed after 2025-12-31`).
    - *Human Resolution*: Replaced all occurrences of `use_container_width=True` with `width="stretch"` across every page and component. Redesigned all 5 views and landing page to match executive Dribbble references (`glass-card` styling, progress-bar corridor cards, avatar initials dossiers, multi-attribute metric badges, and transparent Plotly charts). Unified `ground_truth.csv` into `disparity_flags` telemetry so that all 5 governance safeguards display active cases with complete evidentiary JSON payloads. Added clear CLI execution guidance using `python -m streamlit run dashboard/app.py`.
+
+9. **Frontend Markdown HTML Code-Block Escaping**:
+   - *Problem*: In Markdown specification, any lines indented by 4 or more spaces following a blank line are automatically parsed as `<pre><code>` code blocks, causing raw HTML tags (`<div style="...">`, `<span style="...">`) and `None` to display literally on the frontend instead of rendering as styled DOM elements.
+   - *Human Resolution*: Built a centralized `render_html(html_str)` sanitizer in `dashboard/components/styles.py` that strips multiline indentation (`re.sub(r'^[ \t]+', '', text, flags=re.M)`), strips comments, and passes cleanly formatted HTML directly to Streamlit. Fixed `render_kpi_row` to render into columns directly without wrapping in redundant `st.markdown(None)` calls. Verified all 5 pages render clean, modern CSS components.

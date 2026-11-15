@@ -20,7 +20,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from dashboard.utils.data_loader import load_all_data
 from dashboard.components.kpi_cards import render_kpi_row
-from dashboard.components.styles import inject_custom_css
+from dashboard.components.styles import inject_custom_css, render_html
 from dashboard.components.charts import (
     salary_by_level_bar,
     band_position_scatter,
@@ -33,7 +33,7 @@ from dashboard.components.tables import format_inr, render_styled_dataframe
 inject_custom_css()
 
 # Header (Inspired by Toota / Block AI)
-st.markdown("""
+render_html("""
 <div style="margin-bottom: 22px;">
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div>
@@ -53,7 +53,7 @@ st.markdown("""
         </div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 data = load_all_data()
 df_emp = data.get("employees", pd.DataFrame())
@@ -62,11 +62,11 @@ df_bands = data.get("compensation_bands", pd.DataFrame())
 
 # Sidebar Filters
 with st.sidebar:
-    st.markdown("""
+    render_html("""
     <div style="font-size: 0.8rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;">
         🎛️ Analysis Filters
     </div>
-    """, unsafe_allow_html=True)
+    """)
     role_col = "role_name" if "role_name" in df_emp.columns else ("role_id" if "role_id" in df_emp.columns else None)
     roles = ["All"] + sorted(df_emp[role_col].dropna().unique().tolist()) if role_col and not df_emp.empty else ["All"]
     selected_role = st.selectbox("Role", roles)
@@ -114,63 +114,57 @@ cohort_median = (latest_sal["annual_salary_fte"].median() / 100_000.0) if not la
 cohort_cr = latest_sal["compa_ratio"].mean() if not latest_sal.empty and "compa_ratio" in latest_sal else 100.0
 oob_count = len(latest_sal[(latest_sal["compa_ratio"] < 80) | (latest_sal["compa_ratio"] > 120)]) if not latest_sal.empty and "compa_ratio" in latest_sal else 0
 
-c1, c2, c3, c4 = st.columns(4)
-with c1:
-    st.markdown(render_kpi_row([{
+render_kpi_row([
+    {
         "title": "Cohort Population",
         "value": f"{cohort_count:,}",
         "subtitle": "Matching Active Filters",
         "color": "#3B82F6",
         "icon": "👥",
         "delta": "Segmented",
-    }]), unsafe_allow_html=True)
-
-with c2:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Median FTE Salary",
         "value": f"₹{cohort_median:.2f} L",
         "subtitle": "Annualized Compensation",
         "color": "#10B981",
         "icon": "💰",
         "delta": "50th Percentile",
-    }]), unsafe_allow_html=True)
-
-with c3:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Avg Compa-Ratio",
         "value": f"{cohort_cr:.1f}%",
         "subtitle": "Midpoint Alignment",
         "color": "#8B5CF6",
         "icon": "🎯",
         "delta": "Corridor 80–120%",
-    }]), unsafe_allow_html=True)
-
-with c4:
-    st.markdown(render_kpi_row([{
+    },
+    {
         "title": "Out-of-Band Count",
         "value": f"{oob_count:,}",
         "subtitle": f"{(oob_count/cohort_count*100) if cohort_count else 0:.1f}% of Segment",
         "color": "#EF4444" if oob_count > 0 else "#10B981",
         "icon": "⚠️",
         "delta": "Requires Audit",
-    }]), unsafe_allow_html=True)
+    },
+])
 
 st.write("")
 
 # Charts Row 1
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    render_html("""<div class="plotly-card">""")
     st.plotly_chart(salary_by_level_bar(latest_sal, filtered_emp), width="stretch")
-    st.markdown("</div>", unsafe_allow_html=True)
+    render_html("</div>")
 
 with col2:
-    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    render_html("""<div class="plotly-card">""")
     st.plotly_chart(band_position_scatter(latest_sal, filtered_emp), width="stretch")
-    st.markdown("</div>", unsafe_allow_html=True)
+    render_html("</div>")
 
 # Out-of-Band Analysis Table
-st.markdown("""
+render_html("""
 <div class="glass-card" style="margin-top: 10px;">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
         <div style="display: flex; align-items: center; gap: 8px;">
@@ -182,7 +176,7 @@ st.markdown("""
         </div>
         <span class="metric-badge badge-danger">Band Penetration Exception</span>
     </div>
-""", unsafe_allow_html=True)
+""")
 
 desired_emp_cols = ["employee_id", "full_name", "role_name", "level_code", "location_code", "employment_type", "fte_fraction"]
 avail_emp_cols = [c for c in desired_emp_cols if c in filtered_emp.columns]
@@ -215,4 +209,4 @@ if not out_of_band.empty:
 else:
     st.success("All employees in the filtered cohort are strictly within the 80%–120% compensation corridor.")
 
-st.markdown("</div>", unsafe_allow_html=True)
+render_html("</div>")
