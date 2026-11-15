@@ -1,0 +1,1052 @@
+[
+  {
+    "record_id": "SAL-002545-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002545",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-TAS-L4-DEL-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-000165-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000165",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-UXD-L4-BLR-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-000696-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000696",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-DE-L1-KOL-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-004908-2026-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004908",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-OM-L2-GGN-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-004853-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004853",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-QAE-L3-NOI-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-004810-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004810",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2025-04-01 evaluated against band BAND-OM-L2-GGN-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-004549-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004549",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2025-04-01 evaluated against band BAND-PM-M4-KOL-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-002407-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002407",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2025-04-01 evaluated against band BAND-BA-L3-KOL-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-003431-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003431",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2025-04-01 evaluated against band BAND-BA-L3-KOL-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-000512-2025-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000512",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2025-04-01 evaluated against band BAND-PGM-L5-MUM-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-001781-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001781",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-OM-L2-GGN-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-004805-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004805",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2025-04-01 evaluated against band BAND-HBP-L3-HYD-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-001360-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001360",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-STE-L6-SGP-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-004982-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004982",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2026-04-01 evaluated against band BAND-QAE-L3-NOI-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-004428-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004428",
+    "issue_type": "SALARY_COMPARED_TO_EXPIRED_BAND",
+    "severity": "CRITICAL",
+    "description": "Salary effective 2025-04-01 evaluated against band BAND-OM-L2-GGN-2024 expired on 2024-06-30",
+    "expected_decision": "REJECT_COMPARISON_USE_ACTIVE_BAND",
+    "injected_at": "2026-11-15T14:37:40.093524"
+  },
+  {
+    "record_id": "SAL-001879-2023-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001879",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.63) salary not normalized to full-time equivalent; compared as raw amount \u20b91,212,878",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-004983-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004983",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.8) salary not normalized to full-time equivalent; compared as raw amount \u20b9615,598",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-002404-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002404",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.53) salary not normalized to full-time equivalent; compared as raw amount \u20b91,891,050",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-000172-2025-05",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000172",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.53) salary not normalized to full-time equivalent; compared as raw amount \u20b93,283,273",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-002390-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002390",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.52) salary not normalized to full-time equivalent; compared as raw amount \u20b97,845,258",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-000794-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000794",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.64) salary not normalized to full-time equivalent; compared as raw amount \u20b97,072,628",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-000326-2022-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000326",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.6) salary not normalized to full-time equivalent; compared as raw amount \u20b9424,017",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-001194-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001194",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.56) salary not normalized to full-time equivalent; compared as raw amount \u20b9898,904",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-003815-2024-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003815",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.54) salary not normalized to full-time equivalent; compared as raw amount \u20b96,076,180",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-001989-2025-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001989",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.62) salary not normalized to full-time equivalent; compared as raw amount \u20b9710,780",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-000930-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000930",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.67) salary not normalized to full-time equivalent; compared as raw amount \u20b95,582,165",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-004622-2024-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004622",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.77) salary not normalized to full-time equivalent; compared as raw amount \u20b92,286,028",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-001974-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001974",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.56) salary not normalized to full-time equivalent; compared as raw amount \u20b91,795,081",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-000525-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000525",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.68) salary not normalized to full-time equivalent; compared as raw amount \u20b92,227,200",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-002842-2021-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002842",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.61) salary not normalized to full-time equivalent; compared as raw amount \u20b91,875,996",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-001391-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001391",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.66) salary not normalized to full-time equivalent; compared as raw amount \u20b94,749,992",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-004132-2025-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004132",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.66) salary not normalized to full-time equivalent; compared as raw amount \u20b92,741,910",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-002251-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002251",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.57) salary not normalized to full-time equivalent; compared as raw amount \u20b93,051,672",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-000586-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000586",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.59) salary not normalized to full-time equivalent; compared as raw amount \u20b91,786,688",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-003044-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003044",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.74) salary not normalized to full-time equivalent; compared as raw amount \u20b95,765,048",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-002204-2024-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002204",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.68) salary not normalized to full-time equivalent; compared as raw amount \u20b9761,750",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-001203-2023-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001203",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.61) salary not normalized to full-time equivalent; compared as raw amount \u20b91,770,551",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-002005-2025-05",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002005",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.76) salary not normalized to full-time equivalent; compared as raw amount \u20b91,339,750",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-003499-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003499",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.76) salary not normalized to full-time equivalent; compared as raw amount \u20b91,592,075",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-003993-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003993",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.51) salary not normalized to full-time equivalent; compared as raw amount \u20b95,331,530",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-001601-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001601",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.58) salary not normalized to full-time equivalent; compared as raw amount \u20b91,726,207",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-004917-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004917",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.54) salary not normalized to full-time equivalent; compared as raw amount \u20b92,490,060",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-003409-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003409",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.57) salary not normalized to full-time equivalent; compared as raw amount \u20b92,200,708",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-004703-2022-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004703",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.72) salary not normalized to full-time equivalent; compared as raw amount \u20b93,821,954",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-001732-2026-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001732",
+    "issue_type": "FTE_IGNORED",
+    "severity": "HIGH",
+    "description": "Part-time employee (FTE=0.52) salary not normalized to full-time equivalent; compared as raw amount \u20b9794,887",
+    "expected_decision": "NORMALIZE_BY_FTE_FRACTION",
+    "injected_at": "2026-11-15T14:37:40.116895"
+  },
+  {
+    "record_id": "SAL-003252-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003252",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-004192-2025-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004192",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-004478-2022-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004478",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-002217-2021-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002217",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-001574-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001574",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-001915-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001915",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-000352-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000352",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-001015-2023-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001015",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-003811-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003811",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-001262-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001262",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-003240-2023-01",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003240",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-001887-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-001887",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-000069-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000069",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-004711-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004711",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-003404-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003404",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-000798-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000798",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-000228-2026-04",
+    "table_name": "salary_records",
+    "employee_id": "EMP-000228",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-003017-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-003017",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-002608-2025-03",
+    "table_name": "salary_records",
+    "employee_id": "EMP-002608",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "SAL-004360-2024-02",
+    "table_name": "salary_records",
+    "employee_id": "EMP-004360",
+    "issue_type": "CURRENCY_CONVERSION_MISSING",
+    "severity": "CRITICAL",
+    "description": "Currency code 'XYZ' lacks an exchange rate mapping to INR; cannot be validly compared",
+    "expected_decision": "HALT_COMPARISON_FLAG_MISSING_FX",
+    "injected_at": "2026-11-15T14:37:40.151782"
+  },
+  {
+    "record_id": "ADJ-2026-000081",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-002624",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000081 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000090",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-002772",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000090 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000105",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-003312",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000105 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000139",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-004280",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000139 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000023",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-000736",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000023 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000002",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-000014",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000002 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000053",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001616",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000053 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000050",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001581",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000050 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000088",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-002742",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000088 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000143",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-004417",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000143 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000049",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001500",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000049 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000025",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-000767",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000025 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000060",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001799",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000060 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000078",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-002550",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000078 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000042",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001226",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000042 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000095",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-002975",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000095 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000059",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001792",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000059 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000129",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-004076",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000129 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000031",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-000962",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000031 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000044",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001245",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000044 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000058",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-001788",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000058 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000152",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-004752",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000152 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000093",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-002953",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000093 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000024",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-000760",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000024 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "ADJ-2026-000077",
+    "table_name": "adjustment_proposals",
+    "employee_id": "EMP-002507",
+    "issue_type": "ADJUSTMENT_WITHOUT_APPROVAL",
+    "severity": "CRITICAL",
+    "description": "Salary adjustment proposal ADJ-2026-000077 implemented without mandatory HR Partner approval",
+    "expected_decision": "FLAG_UNAUTHORIZED_CHANGE_REQUIRE_REVERT_OR_HR_APPROVAL",
+    "injected_at": "2026-11-15T14:37:40.156274"
+  },
+  {
+    "record_id": "GRP-ENG-L4-DXB-1-3YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-ENG-L4-DXB-1-3YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-ENG-L1-GGN-1-3YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-ENG-L1-GGN-1-3YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-PRO-L2-AMD-5PLUS_YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-PRO-L2-AMD-5PLUS_YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-HR-L3-BLR-1-3YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-HR-L3-BLR-1-3YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-ENG-L3-MUM-1-3YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-ENG-L3-MUM-1-3YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-OPE-L2-CHN-1-3YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-OPE-L2-CHN-1-3YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-DAT-L5-MUM-3-5YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-DAT-L5-MUM-3-5YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-DAT-L1-BLR-5PLUS_YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-DAT-L1-BLR-5PLUS_YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-DAT-L1-KOL-5PLUS_YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-DAT-L1-KOL-5PLUS_YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-OPE-L2-LDN-3-5YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-OPE-L2-LDN-3-5YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-FIN-L4-AMD-3-5YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-FIN-L4-AMD-3-5YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-ENG-L3-PUN-5PLUS_YR-PT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-ENG-L3-PUN-5PLUS_YR-PT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-FIN-L3-CHN-1-3YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-FIN-L3-CHN-1-3YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-HR-L2-DEL-1-3YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-HR-L2-DEL-1-3YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  },
+  {
+    "record_id": "GRP-DES-L2-GGN-3-5YR-FT",
+    "table_name": "comparable_groups",
+    "employee_id": "N/A",
+    "issue_type": "INCOMPARABLE_ROLES_GROUPED",
+    "severity": "MEDIUM",
+    "description": "Group GRP-DES-L2-GGN-3-5YR-FT bundles incomparable role families without documented organizational rationale",
+    "expected_decision": "DISBAND_GROUP_SPLIT_BY_FUNCTIONAL_FAMILY",
+    "injected_at": "2026-11-15T14:37:40.206255"
+  }
+]

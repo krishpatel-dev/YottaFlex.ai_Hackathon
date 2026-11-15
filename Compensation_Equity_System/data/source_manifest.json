@@ -1,0 +1,21 @@
+{
+  "generator_version": "1.0.0",
+  "generated_at": "2026-11-15T14:37:40.842986",
+  "seed": 20261022,
+  "scale": "full",
+  "tables": {
+    "roles": 21,
+    "levels": 10,
+    "locations": 13,
+    "compensation_bands": 8190,
+    "employees": 5000,
+    "salary_records": 19846,
+    "performance_evidence": 75000,
+    "tenure": 5000,
+    "promotions": 750,
+    "comparable_groups": 589,
+    "adjustment_proposals": 156,
+    "disparity_flags": 1258,
+    "ground_truth_anomalies": 105
+  }
+}
