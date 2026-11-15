@@ -28,7 +28,7 @@ def render_styled_dataframe(df: pd.DataFrame, height: int = 400) -> None:
     """Display an interactive dataframe with column configuration."""
     st.dataframe(
         df,
-        use_container_width=True,
+        width="stretch",
         height=height,
         hide_index=True,
     )

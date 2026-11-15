@@ -20,6 +20,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from dashboard.utils.data_loader import load_all_data, compute_live_metrics
 from dashboard.components.kpi_cards import render_kpi_row
+from dashboard.components.styles import inject_custom_css
 from dashboard.components.charts import (
     compa_ratio_distribution,
     salary_distribution_histogram,
@@ -28,8 +29,31 @@ from dashboard.components.charts import (
 )
 from dashboard.components.tables import format_inr, render_styled_dataframe
 
-st.title("📊 Executive Compensation & Pay Equity Overview")
-st.markdown("Macro-level compensation intelligence, market parity distribution, and exception telemetry.")
+# Apply unified design system
+inject_custom_css()
+
+# Header (Inspired by Toota / Block AI)
+st.markdown("""
+<div style="margin-bottom: 22px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">
+                Executive Summary • FY 2026 Audit
+            </div>
+            <div style="font-size: 1.85rem; font-weight: 800; color: #0F172A; letter-spacing: -0.025em; line-height: 1.2;">
+                Executive Compensation & Pay Equity Overview
+            </div>
+            <div style="font-size: 0.92rem; color: #64748B; margin-top: 4px;">
+                Macro-level compensation intelligence, market parity distribution, and exception telemetry.
+            </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <span class="metric-badge badge-success">● Audit Engine Active</span>
+            <span class="metric-badge badge-info">Benchmark: FY2026</span>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # Load Data
 data = load_all_data()
@@ -41,7 +65,11 @@ df_bands = data.get("compensation_bands", pd.DataFrame())
 
 # Sidebar Filters
 with st.sidebar:
-    st.markdown("### 🔍 Global Filters")
+    st.markdown("""
+    <div style="font-size: 0.8rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;">
+        🔍 Global Filters
+    </div>
+    """, unsafe_allow_html=True)
     loc_col = "location_code" if "location_code" in df_emp.columns else ("location_id" if "location_id" in df_emp.columns else None)
     loc_options = ["All"] + sorted(df_emp[loc_col].dropna().unique().tolist()) if loc_col and not df_emp.empty else ["All"]
     selected_loc = st.selectbox("Location", loc_options)
@@ -79,39 +107,137 @@ open_disparities = len(filtered_flags[filtered_flags["investigation_status"] == 
 filtered_props = df_props[df_props["employee_id"].isin(filtered_emp["employee_id"])] if not df_props.empty else df_props
 pending_props = len(filtered_props[filtered_props["final_status"] == "OPEN"])
 
-# KPI Cards
-kpis = [
-    {"title": "Filtered Headcount", "value": f"{total_emp:,}", "subtitle": "Total Active Employees", "color": "#3B82F6", "icon": "👥"},
-    {"title": "Avg Compa-Ratio", "value": f"{avg_cr:.1f}%", "subtitle": "Parity Baseline = 100%", "color": "#10B981", "icon": "⚖️"},
-    {"title": "Below Band (<80%)", "value": f"{below_band:,}", "subtitle": f"{(below_band/total_emp*100) if total_emp else 0:.1f}% of cohort", "color": "#EF4444", "icon": "🔻"},
-    {"title": "Within Band", "value": f"{within_band:,}", "subtitle": f"{(within_band/total_emp*100) if total_emp else 0:.1f}% compliant", "color": "#10B981", "icon": "✅"},
-    {"title": "Above Band (>120%)", "value": f"{above_band:,}", "subtitle": f"{(above_band/total_emp*100) if total_emp else 0:.1f}% premium", "color": "#8B5CF6", "icon": "🔺"},
-    {"title": "Open Disparities", "value": f"{open_disparities:,}", "subtitle": "Exceptions Requiring HR Audit", "color": "#F59E0B", "icon": "⚠️"},
-    {"title": "Pending Proposals", "value": f"{pending_props:,}", "subtitle": "In Approval Pipeline", "color": "#6366F1", "icon": "📑"},
-]
-render_kpi_row(kpis)
+# Primary Executive KPI Row (4 Top Cards)
+col_k1, col_k2, col_k3, col_k4 = st.columns(4)
 
-st.markdown("---")
+with col_k1:
+    st.markdown(render_kpi_row([{
+        "title": "Filtered Headcount",
+        "value": f"{total_emp:,}",
+        "subtitle": "Active Employees in Cohort",
+        "color": "#3B82F6",
+        "icon": "👥",
+        "delta": "Live cohort",
+    }]), unsafe_allow_html=True)
+
+with col_k2:
+    st.markdown(render_kpi_row([{
+        "title": "Avg Compa-Ratio",
+        "value": f"{avg_cr:.1f}%",
+        "subtitle": "Market Parity Baseline: 100%",
+        "color": "#10B981",
+        "icon": "⚖️",
+        "delta": "Parity target 80–120%",
+    }]), unsafe_allow_html=True)
+
+with col_k3:
+    st.markdown(render_kpi_row([{
+        "title": "Open Disparities",
+        "value": f"{open_disparities:,}",
+        "subtitle": "Exceptions Requiring HR Audit",
+        "color": "#F59E0B",
+        "icon": "⚠️",
+        "delta": "Audit Queue",
+    }]), unsafe_allow_html=True)
+
+with col_k4:
+    st.markdown(render_kpi_row([{
+        "title": "Pending Proposals",
+        "value": f"{pending_props:,}",
+        "subtitle": "In Governance Pipeline",
+        "color": "#6366F1",
+        "icon": "📑",
+        "delta": "Dual-Approval Required",
+    }]), unsafe_allow_html=True)
+
+st.write("")
+
+# Secondary Operational Row (3 Corridor Cards with Progress Bars)
+cor_c1, cor_c2, cor_c3 = st.columns(3)
+
+with cor_c1:
+    pct_within = (within_band / total_emp * 100) if total_emp else 0
+    st.markdown(f"""
+    <div class="glass-card" style="padding: 16px 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 0.82rem; font-weight: 700; color: #1E293B;">Within Band Compliant (80%–120%)</span>
+            <span class="metric-badge badge-success">{within_band:,}</span>
+        </div>
+        <div style="background: #E2E8F0; border-radius: 8px; height: 8px; overflow: hidden; margin-top: 8px;">
+            <div style="background: #10B981; width: {pct_within:.1f}%; height: 100%; border-radius: 8px;"></div>
+        </div>
+        <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">{pct_within:.1f}% of cohort compensated within target market corridor.</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with cor_c2:
+    pct_below = (below_band / total_emp * 100) if total_emp else 0
+    st.markdown(f"""
+    <div class="glass-card" style="padding: 16px 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 0.82rem; font-weight: 700; color: #1E293B;">Below Band Corridor (&lt;80%)</span>
+            <span class="metric-badge badge-danger">{below_band:,}</span>
+        </div>
+        <div style="background: #E2E8F0; border-radius: 8px; height: 8px; overflow: hidden; margin-top: 8px;">
+            <div style="background: #EF4444; width: {pct_below:.1f}%; height: 100%; border-radius: 8px;"></div>
+        </div>
+        <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">{pct_below:.1f}% requires upward salary adjustment to reach band minimum.</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with cor_c3:
+    pct_above = (above_band / total_emp * 100) if total_emp else 0
+    st.markdown(f"""
+    <div class="glass-card" style="padding: 16px 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 0.82rem; font-weight: 700; color: #1E293B;">Market Premium Cohort (&gt;120%)</span>
+            <span class="metric-badge badge-purple">{above_band:,}</span>
+        </div>
+        <div style="background: #E2E8F0; border-radius: 8px; height: 8px; overflow: hidden; margin-top: 8px;">
+            <div style="background: #8B5CF6; width: {pct_above:.1f}%; height: 100%; border-radius: 8px;"></div>
+        </div>
+        <div style="font-size: 0.76rem; color: #64748B; margin-top: 6px;">{pct_above:.1f}% top performers or high-demand market specializations.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Visualizations Row 1
 col1, col2 = st.columns(2)
 with col1:
-    st.plotly_chart(compa_ratio_distribution(latest_sal), use_container_width=True)
+    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    st.plotly_chart(compa_ratio_distribution(latest_sal), width="stretch")
+    st.markdown("</div>", unsafe_allow_html=True)
+
 with col2:
-    st.plotly_chart(salary_distribution_histogram(latest_sal), use_container_width=True)
+    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    st.plotly_chart(salary_distribution_histogram(latest_sal), width="stretch")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # Visualizations Row 2
 col3, col4 = st.columns(2)
 with col3:
-    st.plotly_chart(salary_by_role_boxplot(latest_sal, filtered_emp), use_container_width=True)
-with col4:
-    st.plotly_chart(salary_by_location_bar(latest_sal, filtered_emp), use_container_width=True)
+    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    st.plotly_chart(salary_by_role_boxplot(latest_sal, filtered_emp), width="stretch")
+    st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown("---")
+with col4:
+    st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+    st.plotly_chart(salary_by_location_bar(latest_sal, filtered_emp), width="stretch")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # Recent Exception Activity Table
-st.markdown("### 🚨 Recent Disparity & Compliance Exceptions")
-st.caption("Latest 15 flagged records requiring investigation or remediation.")
+st.markdown("""
+<div class="glass-card" style="margin-top: 10px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.25rem;">🚨</span>
+            <div>
+                <span style="font-size: 1.05rem; font-weight: 800; color: #0F172A;">Recent Disparity & Compliance Exceptions</span>
+                <div style="font-size: 0.78rem; color: #64748B;">Latest flagged records requiring investigation or remediation.</div>
+            </div>
+        </div>
+        <span class="metric-badge badge-warning">Audit Telemetry</span>
+    </div>
+""", unsafe_allow_html=True)
 
 if not filtered_flags.empty:
     display_flags = filtered_flags.head(15)[[
@@ -123,3 +249,5 @@ if not filtered_flags.empty:
     render_styled_dataframe(display_flags, height=350)
 else:
     st.success("No active disparity exceptions detected in the selected cohort.")
+
+st.markdown("</div>", unsafe_allow_html=True)

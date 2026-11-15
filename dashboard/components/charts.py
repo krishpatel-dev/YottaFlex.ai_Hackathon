@@ -29,29 +29,29 @@ PALETTE = {
 }
 
 
-def base_layout(fig: go.Figure, title: str = "", height: int = 400) -> go.Figure:
-    """Apply consistent styling across all charts."""
+def base_layout(fig: go.Figure, title: str = "", height: int = 380) -> go.Figure:
+    """Apply consistent styling across all charts with transparent card integration."""
     fig.update_layout(
         title={
-            "text": f"<b>{title}</b>",
-            "font": {"size": 16, "color": PALETTE["text_dark"], "family": "Inter, sans-serif"},
+            "text": f"<b>{title}</b>" if title else "",
+            "font": {"size": 15, "color": PALETTE["text_dark"], "family": "Inter, -apple-system, sans-serif"},
             "x": 0.02,
             "xanchor": "left",
         },
         height=height,
-        paper_bgcolor=PALETTE["card_bg"],
-        plot_bgcolor="rgba(248, 250, 252, 0.5)",
-        margin=dict(l=40, r=40, t=60, b=40),
-        font=dict(color=PALETTE["text_muted"], size=12, family="Inter, sans-serif"),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        margin=dict(l=40, r=25, t=55 if title else 25, b=35),
+        font=dict(color=PALETTE["text_muted"], size=12, family="Inter, -apple-system, sans-serif"),
         xaxis=dict(
             showgrid=True,
-            gridcolor=PALETTE["grid_color"],
+            gridcolor="rgba(226, 232, 240, 0.7)",
             zeroline=False,
             title=dict(font=dict(size=12, color=PALETTE["text_dark"])),
         ),
         yaxis=dict(
             showgrid=True,
-            gridcolor=PALETTE["grid_color"],
+            gridcolor="rgba(226, 232, 240, 0.7)",
             zeroline=False,
             title=dict(font=dict(size=12, color=PALETTE["text_dark"])),
         ),

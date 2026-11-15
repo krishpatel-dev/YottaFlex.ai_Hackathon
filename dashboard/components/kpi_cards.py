@@ -19,37 +19,102 @@ def render_kpi_card(
     delta: Optional[str] = None,
 ) -> str:
     """
-    Returns an HTML string for a KPI card with a colored top border.
-    Designed to be passed to st.markdown(html, unsafe_allow_html=True).
+    Returns an elegant, modern Dribbble-inspired HTML KPI card.
+    Features: soft pastel icon chip, uppercase micro-header, bold typography,
+    trend pill badge, and subtle bottom accent bar.
     """
     delta_html = ""
     if delta:
-        delta_color = "#10B981" if not delta.startswith("-") else "#EF4444"
-        delta_html = f'<div style="font-size:0.75rem;color:{delta_color};margin-top:4px;">{delta}</div>'
+        is_negative = delta.startswith("-") or "risk" in delta.lower() or "under" in delta.lower()
+        badge_bg = "#FEE2E2" if is_negative else "#DCFCE7"
+        badge_fg = "#991B1B" if is_negative else "#166534"
+        arrow = "↓" if is_negative else "↑"
+        delta_html = f'''
+        <span style="
+            background: {badge_bg};
+            color: {badge_fg};
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+        ">{arrow} {delta}</span>
+        '''
+    else:
+        # Subtle trending arrow icon
+        delta_html = f'''
+        <span style="
+            color: #94A3B8;
+            font-size: 0.85rem;
+            font-weight: 600;
+        ">↗</span>
+        '''
 
     subtitle_html = ""
     if subtitle:
-        subtitle_html = f'<div style="font-size:0.78rem;color:#64748B;margin-top:2px;">{subtitle}</div>'
+        subtitle_html = f'<div style="font-size: 0.78rem; font-weight: 500; color: #64748B; margin-top: 3px;">{subtitle}</div>'
 
     html = f"""
     <div style="
         background: #FFFFFF;
-        border-radius: 12px;
-        border-top: 4px solid {color};
-        padding: 18px 20px 14px 20px;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-        min-height: 110px;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 18px 20px 16px 20px;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+        min-height: 125px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
     ">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <span style="font-size:1.3rem;">{icon}</span>
-            <span style="font-size:0.78rem;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.05em;">{title}</span>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="
+                width: 38px;
+                height: 38px;
+                border-radius: 12px;
+                background: {color}15;
+                color: {color};
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+            ">
+                {icon}
+            </div>
+            {delta_html}
         </div>
-        <div style="font-size:1.9rem;font-weight:700;color:#1E293B;line-height:1.1;">{value}</div>
-        {subtitle_html}
-        {delta_html}
+        
+        <div style="margin-top: 10px;">
+            <div style="
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #64748B;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            ">{title}</div>
+            <div style="
+                font-size: 1.85rem;
+                font-weight: 800;
+                color: #0F172A;
+                letter-spacing: -0.02em;
+                line-height: 1.15;
+                margin-top: 2px;
+            ">{value}</div>
+            {subtitle_html}
+        </div>
+
+        <div style="
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, {color}, {color}33);
+        "></div>
     </div>
     """
     return html

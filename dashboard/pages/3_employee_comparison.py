@@ -21,10 +21,34 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from dashboard.utils.data_loader import load_all_data
 from dashboard.components.charts import employee_comparison_radar
+from dashboard.components.styles import inject_custom_css
 from dashboard.components.tables import format_inr
 
-st.title("👥 Side-by-Side Peer Compensation Audit")
-st.markdown("Compare 2 to 4 employees to audit salary parity, verify comparability factors, and identify documented justifications.")
+# Apply unified design system
+inject_custom_css()
+
+# Header (Inspired by Toota / Block AI)
+st.markdown("""
+<div style="margin-bottom: 22px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">
+                Peer Audit • Equity Diagnostics
+            </div>
+            <div style="font-size: 1.85rem; font-weight: 800; color: #0F172A; letter-spacing: -0.025em; line-height: 1.2;">
+                Side-by-Side Peer Compensation Audit
+            </div>
+            <div style="font-size: 0.92rem; color: #64748B; margin-top: 4px;">
+                Compare 2 to 4 employees to audit salary parity, verify comparability factors, and identify documented justifications.
+            </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <span class="metric-badge badge-purple">Multi-Dimensional Radar</span>
+            <span class="metric-badge badge-info">Explainable Justifications</span>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 data = load_all_data()
 df_emp = data.get("employees", pd.DataFrame())
@@ -59,23 +83,18 @@ else:
 
     for eid in selected_ids:
         emp = df_emp[df_emp["employee_id"] == eid].iloc[0]
-        # Latest salary
         emp_salaries = df_sal[df_sal["employee_id"] == eid].sort_values("effective_date", ascending=False)
         sal = emp_salaries.iloc[0] if not emp_salaries.empty else {}
 
-        # Band
         band_id = sal.get("band_id")
         band = df_bands[df_bands["band_id"] == band_id].iloc[0] if band_id and not df_bands[df_bands["band_id"] == band_id].empty else {}
 
-        # Latest Perf
         emp_perf = df_perf[df_perf["employee_id"] == eid].sort_values("review_date", ascending=False)
         latest_p = emp_perf.iloc[0] if not emp_perf.empty else {}
 
-        # Tenure
         emp_ten = df_tenure[df_tenure["employee_id"] == eid]
         ten = emp_ten.iloc[0] if not emp_ten.empty else {}
 
-        # Promotions
         emp_promos = df_promo[df_promo["employee_id"] == eid]
         promo_count = len(emp_promos)
 
@@ -116,74 +135,166 @@ else:
             "relative_peer_pct": min(100, (profile["compa_ratio"] / 120.0) * 100),
         })
 
-    st.markdown("### 📋 Side-by-Side Comparison Profile")
+    st.markdown("""
+    <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin: 18px 0 12px 0;">
+        Side-by-Side Employee Dossier
+    </div>
+    """, unsafe_allow_html=True)
+
     cols = st.columns(len(profiles))
 
+    # Avatar gradients
+    avatar_gradients = [
+        "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
+        "linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)",
+        "linear-gradient(135deg, #10B981 0%, #047857 100%)",
+        "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+    ]
+
     for idx, (col, p) in enumerate(zip(cols, profiles)):
+        grad = avatar_gradients[idx % len(avatar_gradients)]
+        initials = "".join([part[0] for part in p["full_name"].split()[:2]]).upper() or "EM"
+        b_min = p["band_min"]
+        b_max = p["band_max"]
+        b_range = max(1.0, b_max - b_min)
+        penetration_pct = max(0.0, min(100.0, (p["annual_salary_fte"] - b_min) / b_range * 100.0))
+
+        cr_badge_class = "badge-success" if 80 <= p["compa_ratio"] <= 120 else ("badge-danger" if p["compa_ratio"] < 80 else "badge-purple")
+        cr_status_text = "Midpoint Parity" if 80 <= p["compa_ratio"] <= 120 else ("Below Band" if p["compa_ratio"] < 80 else "Market Premium")
+
         with col:
-            st.markdown(f"#### 👤 {p['full_name']}")
-            st.caption(f"ID: `{p['employee_id']}` • {p['role_name']}")
-            st.metric("Annual Salary (FTE)", format_inr(p["annual_salary_fte"]))
-            st.metric("Compa-Ratio", f"{p['compa_ratio']:.1f}%")
             st.markdown(f"""
-            - **Career Level:** `{p['level_code']}`
-            - **Location:** `{p['location_code']}`
-            - **Employment Type:** `{p['employment_type']}` ({p['fte_fraction']:.2f} FTE)
-            - **Tenure:** {p['months_in_company']} months (`{p['tenure_band']}`)
-            - **Performance Rating:** {p['perf_rating']:.1f} / 5.0 (`{p['perf_label']}`)
-            - **Promotions:** {p['promotions_count']} received
-            - **Market Midpoint:** {format_inr(p['band_mid'])}
-            - **Band Range:** {format_inr(p['band_min'])} - {format_inr(p['band_max'])}
-            """)
+            <div class="glass-card" style="padding: 20px; position: relative; border-top: 4px solid #3B82F6;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: {grad}; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                        {initials}
+                    </div>
+                    <div>
+                        <div style="font-weight: 800; font-size: 1.15rem; color: #0F172A; line-height: 1.2;">{p['full_name']}</div>
+                        <div style="font-size: 0.78rem; color: #64748B;"><code>{p['employee_id']}</code> • {p['role_name']}</div>
+                    </div>
+                </div>
 
-    st.markdown("---")
+                <div style="margin: 14px 0 10px 0; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                    <div style="font-size: 0.72rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em;">FTE Normalized Compensation</div>
+                    <div style="font-size: 1.7rem; font-weight: 800; color: #0F172A; margin: 2px 0 6px 0;">{format_inr(p['annual_salary_fte'])}</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="metric-badge {cr_badge_class}">{p['compa_ratio']:.1f}% Compa-Ratio</span>
+                        <span style="font-size: 0.75rem; color: #64748B;">{cr_status_text}</span>
+                    </div>
+                </div>
 
-    # Radar Comparison Chart
+                <!-- Band Penetration Bar -->
+                <div style="margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748B; margin-bottom: 4px;">
+                        <span>Band Min ({format_inr(b_min)})</span>
+                        <span style="font-weight: 700; color: #1E293B;">Penetration: {penetration_pct:.0f}%</span>
+                        <span>Max ({format_inr(b_max)})</span>
+                    </div>
+                    <div style="background: #E2E8F0; border-radius: 6px; height: 6px; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, #3B82F6, #10B981); width: {penetration_pct:.1f}%; height: 100%;"></div>
+                    </div>
+                </div>
+
+                <!-- Key Attribute Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem;">
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                        <div style="font-size: 0.7rem; color: #64748B;">Level & Location</div>
+                        <div style="font-weight: 700; color: #0F172A;">{p['level_code']} • {p['location_code']}</div>
+                    </div>
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                        <div style="font-size: 0.7rem; color: #64748B;">Employment Type</div>
+                        <div style="font-weight: 700; color: #0F172A;">{p['employment_type']} ({p['fte_fraction']:.1f} FTE)</div>
+                    </div>
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                        <div style="font-size: 0.7rem; color: #64748B;">Tenure</div>
+                        <div style="font-weight: 700; color: #0F172A;">{p['months_in_company']} mos ({p['tenure_band']})</div>
+                    </div>
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 8px 10px;">
+                        <div style="font-size: 0.7rem; color: #64748B;">Performance</div>
+                        <div style="font-weight: 700; color: #0F172A;">⭐ {p['perf_rating']:.1f} ({p['perf_label']})</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px; font-size: 0.76rem; color: #64748B; display: flex; justify-content: space-between;">
+                    <span>Promotions: <b>{p['promotions_count']}</b></span>
+                    <span>Market Mid: <b>{format_inr(p['band_mid'])}</b></span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # Radar Comparison Chart & Evaluation Split
     col_chart, col_eval = st.columns([1, 1])
 
     with col_chart:
-        st.plotly_chart(employee_comparison_radar(radar_data), use_container_width=True)
+        st.markdown("""<div class="plotly-card">""", unsafe_allow_html=True)
+        st.plotly_chart(employee_comparison_radar(radar_data), width="stretch")
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with col_eval:
-        st.markdown("### ⚖️ Comparability & Justification Analysis")
-
-        # Compare pair A vs B
         pA, pB = profiles[0], profiles[1]
         sal_diff = abs(pA["annual_salary_fte"] - pB["annual_salary_fte"])
         higher_emp = pA if pA["annual_salary_fte"] >= pB["annual_salary_fte"] else pB
         lower_emp = pB if higher_emp == pA else pA
 
-        st.markdown(f"""
-        **Salary Delta:**  
-        **{higher_emp['full_name']}** earns **{format_inr(sal_diff)}** more than **{lower_emp['full_name']}**.
-        """)
-
-        # Check Comparability Factors
         same_role = (pA["role_family"] == pB["role_family"])
         same_level = (pA["level_code"] == pB["level_code"])
         same_loc = (pA["location_code"] == pB["location_code"])
         same_tenure = (pA["tenure_band"] == pB["tenure_band"])
 
-        st.markdown("#### 1. Peer Comparability Factors")
+        # Comparability Card
+        st.markdown(f"""
+        <div class="glass-card" style="margin-bottom: 14px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.15rem;">⚖️</span>
+                    <span style="font-weight: 800; font-size: 1rem; color: #0F172A;">Peer Comparability Audit</span>
+                </div>
+                <span class="metric-badge {'badge-success' if (same_role and same_level and same_loc) else 'badge-warning'}">
+                    {'Comparable Cohort' if (same_role and same_level and same_loc) else 'Incomparable Baseline'}
+                </span>
+            </div>
+            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+                <div style="font-size: 0.74rem; color: #64748B; font-weight: 600; text-transform: uppercase;">Observed Salary Delta</div>
+                <div style="font-size: 1.3rem; font-weight: 800; color: #0F172A; margin: 2px 0;">
+                    <b>{higher_emp['full_name']}</b> earns <span style="color: #2563EB;">+{format_inr(sal_diff)}</span> more than <b>{lower_emp['full_name']}</b>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
         if same_role and same_level and same_loc:
-            st.success("✅ **Directly Comparable Peers**: Same role family, career level, and business location.")
+            st.success("✅ **Directly Comparable Peers**: Both individuals share identical role families, career levels, and business locations.")
         else:
             reasons = []
             if not same_role: reasons.append(f"Different role families ({pA['role_family']} vs {pB['role_family']})")
             if not same_level: reasons.append(f"Different career levels ({pA['level_code']} vs {pB['level_code']})")
-            if not same_loc: reasons.append(f"Different locations ({pA['location_code']} vs {pB['location_code']})")
-            st.warning(f"⚠️ **Incomparable Baseline**: {'; '.join(reasons)}.")
+            if not same_loc: reasons.append(f"Different business locations ({pA['location_code']} vs {pB['location_code']})")
+            st.warning(f"⚠️ **Incomparable Baseline Factors**: {'; '.join(reasons)}.")
 
-        st.markdown("#### 2. Documented Justification Analysis")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        # Documented Justification Card
         justifications = []
         if higher_emp["perf_rating"] >= 4.5 and lower_emp["perf_rating"] < 4.0:
-            justifications.append(f"Higher documented performance rating: {higher_emp['perf_rating']} ({higher_emp['perf_label']}) vs {lower_emp['perf_rating']} ({lower_emp['perf_label']})")
+            justifications.append(f"Superior Performance Record: {higher_emp['perf_rating']} ({higher_emp['perf_label']}) vs {lower_emp['perf_rating']} ({lower_emp['perf_label']})")
         if higher_emp["promotions_count"] > lower_emp["promotions_count"]:
-            justifications.append(f"Promotion history: {higher_emp['promotions_count']} promotions vs {lower_emp['promotions_count']}")
+            justifications.append(f"Career Progression: {higher_emp['promotions_count']} documented promotions vs {lower_emp['promotions_count']}")
         if higher_emp["months_in_company"] > lower_emp["months_in_company"] + 12:
-            justifications.append(f"Longer tenure: {higher_emp['months_in_company']} months vs {lower_emp['months_in_company']} months")
+            justifications.append(f"Tenured Service: {higher_emp['months_in_company']} months vs {lower_emp['months_in_company']} months")
+
+        st.markdown("""
+        <div class="glass-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.15rem;">📋</span>
+                    <span style="font-weight: 800; font-size: 1rem; color: #0F172A;">Documented Equity Justification Analysis</span>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
         if justifications:
-            st.info("💡 **Documented Explanations Found:**\n" + "\n".join([f"- {j}" for j in justifications]))
+            st.info("💡 **Documented Explanations Identified:**\n" + "\n".join([f"- {j}" for j in justifications]))
         else:
             st.error("🚨 **POTENTIAL UNEXPLAINED DISPARITY**: No documented performance or tenure factors fully justify the compensation gap. Flagged for HR compensation partner audit.")
+
+        st.markdown("</div>", unsafe_allow_html=True)

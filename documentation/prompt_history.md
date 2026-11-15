@@ -171,6 +171,37 @@ also there will be a green tick mark in the pic in 19 commits row so make sure i
 
 ---
 
+### Prompt 4: Root Restructuring & Remote Git Configuration
+* **Timestamp:** 2026-11-15T15:15:20+05:30
+* **Goal:** Flatten project directory to workspace root, ensure green CI checks on GitHub, remove redundant prompt history files, and align repository structure.
+* **Full Prompt Text:**
+```text
+do one thing, do not keeping everything in this folder @[c:\CandidateWorkspace\Compensation_Equity_System] keep everything in the root folder itself. given a photo for reference, and also there is 2 prompt_history files
+
+also there will be a green tick mark in the pic in 19 commits row so make sure in this project also those checks is passed (i will tell you if there is a green tick mark in this new project)
+```
+
+---
+
+### Prompt 5: Modern UI/UX Overhaul & Streamlit 1.62 Deprecation Resolution
+* **Timestamp:** 2026-11-15T15:35:45+05:30
+* **Goal:** Overhaul the entire dashboard UI/UX to match enterprise Dribbble references (Toota, Block AI, HRoom, SAP HCM), fix Streamlit 1.62 deprecation notices (`use_container_width` -> `width='stretch'`), resolve terminal execution issues, and populate all exception safeguard categories.
+* **Full Prompt Text:**
+```text
+ok so now let's work on UI/UX:
+
+pic 1,2,9,10 and 11 are images from dribbble for your reference for UI/UX
+pic 3,4,5,6,7 and 8 are the current UIs (for some screenshots from these i have decreased the size of the screen so that i can take full screenshot of the content)
+
+work on the references to make the UI/UX
+
+and For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+Please replace `use_container_width` with `width`.
+`use_container_width` will be removed after 2025-12-31.
+```
+
+---
+
 ## 3. Where AI Accelerated Development
 
 1. **Relational Schema Boilerplate**: AI generated complete, typed SQLAlchemy 2.0 ORM models and DDL SQL for 12 normalized tables with extensive foreign keys, checks, and comments.
@@ -211,3 +242,7 @@ AI was not relied upon blindly. Several critical bugs, mathematical mismatches, 
 7. **Root Restructuring & Batch Analysis Vectorization / Indexing**:
    - *Problem*: Project lived inside a redundant `Compensation_Equity_System/` subdirectory, and unindexed DataFrame queries across 5,000 employees in `analyze_all()` caused CI timeouts and slow test execution (~2 minutes).
    - *Human Resolution*: Restructured the repository directly to the root, added `.github/workflows/ci.yml` for automated GitHub check validation, implemented single-pass lookup caches in `CompensationAnalyzer` and `find_comparable_peers`, reducing test runtime to ~25 seconds and ensuring automated CI checks pass with green tick indicators.
+
+8. **UI/UX Modernization & Streamlit 1.62 Deprecation Resolution**:
+   - *Problem*: Dashboard pages exhibited cramped KPI cards, plain unformatted bullet lists, zero counts across 5 exception safeguard categories, and repeated runtime console warnings (`Please replace use_container_width with width. use_container_width will be removed after 2025-12-31`).
+   - *Human Resolution*: Replaced all occurrences of `use_container_width=True` with `width="stretch"` across every page and component. Redesigned all 5 views and landing page to match executive Dribbble references (`glass-card` styling, progress-bar corridor cards, avatar initials dossiers, multi-attribute metric badges, and transparent Plotly charts). Unified `ground_truth.csv` into `disparity_flags` telemetry so that all 5 governance safeguards display active cases with complete evidentiary JSON payloads. Added clear CLI execution guidance using `python -m streamlit run dashboard/app.py`.
