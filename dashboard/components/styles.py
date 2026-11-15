@@ -83,24 +83,6 @@ def inject_custom_css() -> None:
             text-transform: capitalize !important;
         }
 
-        /* Replace default 'app' menu entry with 'System Overview' */
-        [data-testid="stSidebarNav"] ul li:first-child a span {
-            display: none !important;
-        }
-
-        [data-testid="stSidebarNav"] ul li:first-child a::after {
-            content: "System Overview" !important;
-            font-size: 0.88rem !important;
-            font-weight: 600 !important;
-            color: #E2E8F0 !important;
-            letter-spacing: 0.01em !important;
-        }
-
-        [data-testid="stSidebarNav"] ul li:first-child a[aria-current="page"]::after {
-            color: #60A5FA !important;
-            font-weight: 700 !important;
-        }
-
         [data-testid="stSidebarNav"] li div {
             border-radius: 10px !important;
             margin-bottom: 4px !important;
@@ -112,26 +94,31 @@ def inject_custom_css() -> None:
         }
 
         /* Sidebar Selectbox & Input Controls — High-Contrast Dark Slate */
-        [data-testid="stSidebar"] div[data-baseweb="select"] > div {
+        [data-testid="stSidebar"] div[data-baseweb="select"] > div,
+        [data-testid="stSidebar"] div[data-baseweb="input"] > div {
             background-color: #1E293B !important;
             border: 1px solid #334155 !important;
             border-radius: 10px !important;
         }
 
-        [data-testid="stSidebar"] div[data-baseweb="select"] * {
+        [data-testid="stSidebar"] div[data-baseweb="select"] *,
+        [data-testid="stSidebar"] div[data-baseweb="input"] * {
             color: #FFFFFF !important;
             font-weight: 600 !important;
         }
 
-        [data-testid="stSidebar"] div[data-baseweb="select"] input {
+        [data-testid="stSidebar"] div[data-baseweb="select"] input,
+        [data-testid="stSidebar"] div[data-baseweb="input"] input {
             color: #FFFFFF !important;
+            background-color: transparent !important;
         }
 
         [data-testid="stSidebar"] div[data-baseweb="select"] svg {
             fill: #94A3B8 !important;
         }
 
-        [data-testid="stSidebar"] .stSelectbox label {
+        [data-testid="stSidebar"] .stSelectbox label,
+        [data-testid="stSidebar"] .stTextInput label {
             color: #CBD5E1 !important;
             font-weight: 600 !important;
             font-size: 0.82rem !important;
@@ -160,16 +147,34 @@ def inject_custom_css() -> None:
             background-color: #334155 !important;
         }
 
-        /* Main Content Select Boxes & Multiselects */
-        .stApp div[data-baseweb="select"] > div {
+        /* Main Content Select Boxes, Inputs & Textareas — Crisp White Cards */
+        [data-testid="stMain"] div[data-baseweb="select"] > div,
+        [data-testid="stMain"] div[data-baseweb="input"] > div,
+        [data-testid="stMain"] div[data-baseweb="textarea"] > div,
+        .main div[data-baseweb="select"] > div,
+        .main div[data-baseweb="input"] > div,
+        .main div[data-baseweb="textarea"] > div {
             border-radius: 10px !important;
             border: 1px solid #CBD5E1 !important;
             background-color: #FFFFFF !important;
         }
 
-        .stApp div[data-baseweb="select"] * {
+        [data-testid="stMain"] div[data-baseweb="select"] *,
+        [data-testid="stMain"] div[data-baseweb="input"] *,
+        [data-testid="stMain"] div[data-baseweb="textarea"] *,
+        .main div[data-baseweb="select"] *,
+        .main div[data-baseweb="input"] *,
+        .main div[data-baseweb="textarea"] * {
             color: #0F172A !important;
             font-weight: 600 !important;
+        }
+
+        [data-testid="stMain"] input,
+        [data-testid="stMain"] textarea,
+        .main input,
+        .main textarea {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
         }
 
         /* Glassmorphic White Container Cards */

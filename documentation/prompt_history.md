@@ -238,6 +238,38 @@ now continue
 
 ---
 
+### Prompt 9: Sidebar White Flash & "app" Flicker Resolution
+* **Timestamp:** 2026-11-15T17:00:40+05:30
+* **Goal:** Permanently resolve the split-second white sidebar flash and temporary appearance of the root file title "app" during page navigation transitions.
+* **Full Prompt Text:**
+```text
+ok everything is perfect, it just when i click on executive overview from system overview from side bar, or shifting from any menu to other menu, for a very short interval of time like for split second the background of side bar turn into white and i can see "app" written in place of "system overview" like seen in the pic
+
+implement the fix, and then i will check whether it is fixed or not then i will tell you to commit and push
+```
+
+---
+
+### Prompt 10: Form Controls Theming & Main vs Sidebar Style Scoping
+* **Timestamp:** 2026-11-15T17:10:16+05:30
+* **Goal:** Eliminate unintended dark background styling on main form inputs, search bars, textareas, and dataframe headers caused by global theme defaults.
+* **Full Prompt Text:**
+```text
+you have added the grey color where not needed, refere the pics
+```
+
+---
+
+### Prompt 11: Final Production Push Approval
+* **Timestamp:** 2026-11-15T17:14:33+05:30
+* **Goal:** Final candidate verification and authorization to push all production code and documentation to GitHub.
+* **Full Prompt Text:**
+```text
+ok commit and push
+```
+
+---
+
 ## 3. Where AI Accelerated Development
 
 1. **Relational Schema Boilerplate**: AI generated complete, typed SQLAlchemy 2.0 ORM models and DDL SQL for 12 normalized tables with extensive foreign keys, checks, and comments.
@@ -294,3 +326,7 @@ AI was not relied upon blindly. Several critical bugs, mathematical mismatches, 
 11. **Sidebar Navigation Title Casing & Root Label Customization**:
     - *Problem*: Streamlit's default multipage navigation displayed lowercase file-derived names (`executive overview`, `compensation analysis`, etc.) and designated the entrypoint script as simply `"app"`. Furthermore, sidebar dropdown selectboxes had light-grey text against white input elements, causing poor contrast.
     - *Human Resolution*: Renamed all page files to Title Case (`1_Executive_Overview.py`, `2_Compensation_Analysis.py`, etc.), injected targeted CSS targeting `[data-testid="stSidebarNav"]` to capitalize labels and replace the `"app"` link with `"System Overview"`, and styled sidebar inputs to high-contrast dark slate (`#1E293B`) with pure white text (`#FFFFFF`) and dark popover options.
+
+12. **Streamlit Native Navigation Router & Scoped Form Theming**:
+    - *Problem*: Switching pages caused a brief white background flash and temporary appearance of `"app"`. Setting `secondaryBackgroundColor = "#0B0F19"` in `config.toml` bled dark backgrounds onto all main form inputs, search bars, textareas, and table headers.
+    - *Human Resolution*: Migrated `dashboard/app.py` to Streamlit's official `st.navigation()` API, creating a dedicated `0_System_Overview.py` so that `"System Overview"` is the native title from frame zero without DOM hacks. Restored `secondaryBackgroundColor = "#FFFFFF"` in `config.toml`, and rigorously scoped CSS inputs between `[data-testid="stSidebar"]` (dark slate `#1E293B` with pure white text) and `[data-testid="stMain"]` (clean white `#FFFFFF` with deep navy `#0F172A` text), eliminating both the page transition flicker and unwanted grey form backgrounds.
