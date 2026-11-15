@@ -64,3 +64,34 @@ def test_executive_summary_kpis(analyzer):
     assert "below_band_count" in kpis
     assert "within_band_count" in kpis
     assert "above_band_count" in kpis
+
+
+def test_analyze_all_subset():
+    """Test batch analysis on a targeted employee subset."""
+    df_emp = pd.read_csv(DATA_DIR / "transactions" / "employees.csv").head(10)
+    df_sal = pd.read_csv(DATA_DIR / "transactions" / "salary_records.csv")
+    df_bands = pd.read_csv(DATA_DIR / "master" / "compensation_bands.csv")
+    df_tenure = pd.read_csv(DATA_DIR / "transactions" / "tenure.csv")
+    df_perf = pd.read_csv(DATA_DIR / "transactions" / "performance_evidence.csv")
+    df_roles = pd.read_csv(DATA_DIR / "master" / "roles.csv")
+    df_levels = pd.read_csv(DATA_DIR / "master" / "levels.csv")
+    df_locs = pd.read_csv(DATA_DIR / "master" / "locations.csv")
+
+    sub_analyzer = CompensationAnalyzer(
+        employees_df=df_emp,
+        salary_df=df_sal,
+        bands_df=df_bands,
+        tenure_df=df_tenure,
+        perf_df=df_perf,
+        roles_df=df_roles,
+        levels_df=df_levels,
+        locations_df=df_locs,
+    )
+
+    batch_df = sub_analyzer.analyze_all()
+    assert isinstance(batch_df, pd.DataFrame)
+    assert len(batch_df) == 10
+    assert "employee_id" in batch_df.columns
+    assert "compa_ratio" in batch_df.columns
+    assert "band_position" in batch_df.columns
+

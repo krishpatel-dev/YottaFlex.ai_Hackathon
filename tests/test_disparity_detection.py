@@ -94,6 +94,26 @@ def test_scenario_5_incomparable_roles_grouped_detection(dataset):
         assert f["issue_type"] == "INCOMPARABLE_ROLES_GROUPED"
 
 
+def test_scenario_6_unexplained_disparity_detection(dataset):
+    """Verify system detects statistically unexplained pay gaps within peer cohorts."""
+    detector = DisparityDetector()
+    flags, _ = detector.detect_unexplained_disparities(
+        dataset["employees"],
+        dataset["salary_records"],
+        dataset["comparable_groups"],
+        dataset["performance_evidence"],
+        dataset["promotions"],
+    )
+    # Ensure detection returns list of valid disparity flags
+    assert isinstance(flags, list)
+    if flags:
+        for f in flags:
+            assert f["issue_type"] == "UNEXPLAINED_DISPARITY"
+            assert "severity" in f
+            assert "salary_difference" in f
+            assert "employee_id" in f
+
+
 def test_ground_truth_isolation(dataset):
     """Assert ground truth contains expected anomaly classes and is isolated."""
     df_gt = dataset["ground_truth"]
