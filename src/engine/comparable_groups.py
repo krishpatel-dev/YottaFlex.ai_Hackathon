@@ -221,13 +221,22 @@ def find_comparable_peers(
         result["invalidity_reason"] = f"Employee '{employee_id}' not found."
         return result
 
-    # Scan every group for membership
-    matched_group: Optional[pd.Series] = None
-    for _, grp in groups_df.iterrows():
-        members = _safe_json_loads(grp.get("member_employee_ids"))
-        if employee_id in members:
-            matched_group = grp
-            break
+    # Lookup group membership via cached index or single-pass map
+    member_to_group = groups_df.attrs.get("_member_to_group_cache") if hasattr(groups_df, "attrs") else None
+    if member_to_group is None:
+        member_to_group = {}
+        for _, grp in groups_df.iterrows():
+            members = _safe_json_loads(grp.get("member_employee_ids"))
+            for m in members:
+                if m not in member_to_group:
+                    member_to_group[m] = grp
+        try:
+            if hasattr(groups_df, "attrs"):
+                groups_df.attrs["_member_to_group_cache"] = member_to_group
+        except Exception:
+            pass
+
+    matched_group: Optional[pd.Series] = member_to_group.get(employee_id)
 
     if matched_group is None:
         result["invalidity_reason"] = (

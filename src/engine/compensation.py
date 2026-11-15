@@ -94,6 +94,34 @@ class CompensationAnalyzer:
         # Pre-compute comparable groups and their statistics
         self._groups_df: pd.DataFrame = pd.DataFrame()
         self._analysis_cache: dict[str, dict] = {}
+
+        # Fast lookup caches for high-throughput batch analysis
+        self._cached_current_salary: dict[str, pd.Series] = {}
+        if not self.salary_df.empty and "employee_id" in self.salary_df.columns:
+            s_df = self.salary_df.copy()
+            if "end_date" in s_df.columns:
+                active_sal = s_df[s_df["end_date"].isna()]
+                if not active_sal.empty:
+                    s_df = active_sal
+            if "effective_date" in s_df.columns:
+                s_df = s_df.sort_values("effective_date", ascending=False)
+            grouped_s = s_df.groupby("employee_id").first()
+            self._cached_current_salary = {
+                emp_id: row for emp_id, row in grouped_s.iterrows()
+            }
+
+        self._cached_latest_perf: dict[str, pd.Series] = {}
+        if not self.perf_df.empty and "employee_id" in self.perf_df.columns:
+            p_df = self.perf_df.copy()
+            if "is_active" in p_df.columns:
+                p_df = p_df[p_df["is_active"] == True]  # noqa: E712
+            if "review_date" in p_df.columns:
+                p_df = p_df.sort_values("review_date", ascending=False)
+            grouped_p = p_df.groupby("employee_id").first()
+            self._cached_latest_perf = {
+                emp_id: row for emp_id, row in grouped_p.iterrows()
+            }
+
         self._run_initial_normalization()
 
     # ------------------------------------------------------------------
@@ -121,6 +149,8 @@ class CompensationAnalyzer:
 
     def _get_current_salary(self, employee_id: str) -> Optional[pd.Series]:
         """Return the current (end_date is null) salary record for an employee."""
+        if employee_id in self._cached_current_salary:
+            return self._cached_current_salary[employee_id]
         if self.salary_df.empty:
             return None
         emp_sal = self.salary_df[self.salary_df["employee_id"] == employee_id]
@@ -130,13 +160,14 @@ class CompensationAnalyzer:
             current = emp_sal[emp_sal["end_date"].isna()]
             if not current.empty:
                 return current.iloc[-1]
-        # Fallback: most recent by effective_date
         if "effective_date" in emp_sal.columns:
             return emp_sal.sort_values("effective_date").iloc[-1]
         return emp_sal.iloc[-1]
 
     def _get_latest_perf(self, employee_id: str) -> Optional[pd.Series]:
         """Return the most recent active performance record."""
+        if employee_id in self._cached_latest_perf:
+            return self._cached_latest_perf[employee_id]
         if self.perf_df.empty:
             return None
         emp_perf = self.perf_df[self.perf_df["employee_id"] == employee_id]

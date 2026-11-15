@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-11-15T15:23:22.117104",
+  "total_headcount": 5000,
+  "average_compa_ratio": 124.83,
+  "distribution": {
+    "below_band": 50,
+    "within_band": 2348,
+    "above_band": 2602
+  },
+  "disparity_exceptions": {
+    "total_flags": 1258,
+    "by_issue_type": {
+      "UNEXPLAINED_DISPARITY": 1258
+    },
+    "by_severity": {
+      "MEDIUM": 881,
+      "HIGH": 377
+    }
+  },
+  "proposals": {
+    "total_proposals": 156,
+    "implemented": 25,
+    "pending_approval": 131
+  }
+}

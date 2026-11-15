@@ -76,7 +76,7 @@ The system continuously audits and isolates five critical compliance exceptions:
 ### 2. Environment Setup
 ```bash
 # Clone the repository and enter directory
-cd c:\CandidateWorkspace\Compensation_Equity_System
+cd c:\CandidateWorkspace
 
 # Create and activate virtual environment
 python -m venv venv
@@ -93,23 +93,22 @@ pip install -r requirements.txt
 Execute the deterministic data generator using fixed seed `20261022`:
 ```bash
 # Generate the full production dataset (5,000 employees, 3-year history)
-python src/generator/generate.py --seed 20261022 --scale full
+python -m src.generator.generate --seed 20261022 --scale full
 
 # Or generate starter dataset (500 employees for rapid testing)
-python src/generator/generate.py --seed 20261022 --scale starter
+python -m src.generator.generate --seed 20261022 --scale starter
 ```
 
 ### 4. Run the Automated Test Suite
 Execute the full pytest suite (covering normalization, disparity detection, integrity, and reproducibility):
 ```bash
-# Set PYTHONPATH and run tests
-$env:PYTHONPATH = "c:\CandidateWorkspace\Compensation_Equity_System"
+# Run all tests directly
 python -m pytest tests/ -v
 ```
 
 ### 5. Launch the Streamlit Analytics Platform
 ```bash
-streamlit run dashboard/app.py
+python -m streamlit run dashboard/app.py
 ```
 Open your browser at `http://localhost:8501`.
 
