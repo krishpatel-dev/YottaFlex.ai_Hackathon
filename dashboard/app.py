@@ -240,38 +240,38 @@ with col_safe:
             <span style="font-size: 1.05rem; font-weight: 800; color: #0F172A;">Five Mandatory Exception Safeguards</span>
         </div>
         <div style="display: flex; flex-direction: column; gap: 10px;">
-            <div style="background: #FEF2F2; border: 1px solid #FEE2E2; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #EF4444; border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #991B1B;">1. Expired Band Benchmark Protection</div>
-                    <div style="font-size: 0.74rem; color: #B91C1C;">Blocks salary comparisons evaluated against obsolete market bands.</div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #0F172A;">1. Expired Band Benchmark Protection</div>
+                    <div style="font-size: 0.74rem; color: #64748B;">Blocks salary comparisons evaluated against obsolete market bands.</div>
                 </div>
                 <span class="metric-badge badge-danger">15 Injected / Blocked</span>
             </div>
-            <div style="background: #FFFBEB; border: 1px solid #FEF3C7; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #F59E0B; border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #92400E;">2. FTE Pro-Rata Scaling Verification</div>
-                    <div style="font-size: 0.74rem; color: #B45309;">Normalizes part-time employee compensation to full-time equivalent basis.</div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #0F172A;">2. FTE Pro-Rata Scaling Verification</div>
+                    <div style="font-size: 0.74rem; color: #64748B;">Normalizes part-time employee compensation to full-time equivalent basis.</div>
                 </div>
                 <span class="metric-badge badge-warning">30 Injected / Scaled</span>
             </div>
-            <div style="background: #FEF2F2; border: 1px solid #FEE2E2; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #EF4444; border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #991B1B;">3. FX Currency Normalization Gate</div>
-                    <div style="font-size: 0.74rem; color: #B91C1C;">Enforces currency conversions to INR across global talent locations.</div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #0F172A;">3. FX Currency Normalization Gate</div>
+                    <div style="font-size: 0.74rem; color: #64748B;">Enforces currency conversions to INR across global talent locations.</div>
                 </div>
                 <span class="metric-badge badge-danger">20 Injected / Fixed</span>
             </div>
-            <div style="background: #FEF2F2; border: 1px solid #FEE2E2; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #EF4444; border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #991B1B;">4. Unauthorized Payroll Adjustment Control</div>
-                    <div style="font-size: 0.74rem; color: #B91C1C;">Strictly prevents payroll modification without Manager & HR dual-signoff.</div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #0F172A;">4. Unauthorized Payroll Adjustment Control</div>
+                    <div style="font-size: 0.74rem; color: #64748B;">Strictly prevents payroll modification without Manager & HR dual-signoff.</div>
                 </div>
                 <span class="metric-badge badge-danger">25 Injected / Blocked</span>
             </div>
-            <div style="background: #FFFBEB; border: 1px solid #FEF3C7; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-left: 4px solid #F59E0B; border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #92400E;">5. Incomparable Role Clustering Guard</div>
-                    <div style="font-size: 0.74rem; color: #B45309;">Prevents invalid peer grouping across distinct job families.</div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #0F172A;">5. Incomparable Role Clustering Guard</div>
+                    <div style="font-size: 0.74rem; color: #64748B;">Prevents invalid peer grouping across distinct job families.</div>
                 </div>
                 <span class="metric-badge badge-warning">15 Injected / Flagged</span>
             </div>

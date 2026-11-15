@@ -64,7 +64,20 @@ emp_options = df_emp.apply(
     axis=1
 ).tolist() if not df_emp.empty else []
 
-default_selection = emp_options[:2] if len(emp_options) >= 2 else []
+# Select two comparable peers by default (same role and level if possible)
+default_selection = []
+if not df_emp.empty and len(emp_options) >= 2:
+    # Try finding two employees with the same role_id
+    role_counts = df_emp["role_name"].value_counts()
+    common_role = role_counts.index[0] if not role_counts.empty else None
+    if common_role:
+        peers = df_emp[df_emp["role_name"] == common_role]["employee_id"].tolist()
+        if len(peers) >= 2:
+            default_selection = [opt for opt in emp_options if any(opt.startswith(p + " -") for p in peers[:2])]
+
+if len(default_selection) < 2:
+    default_selection = emp_options[:2] if len(emp_options) >= 2 else []
+
 selected_labels = st.multiselect(
     "Select 2 to 4 Employees to Compare:",
     options=emp_options,
@@ -234,8 +247,8 @@ else:
         same_loc = (pA["location_code"] == pB["location_code"])
         same_tenure = (pA["tenure_band"] == pB["tenure_band"])
 
-        comparable_badge = "badge-success" if (same_role and same_level and same_loc) else "badge-warning"
-        comparable_label = "Comparable Cohort" if (same_role and same_level and same_loc) else "Incomparable Baseline"
+        comparable_badge = "badge-success" if (same_role and same_level and same_loc) else "badge-info"
+        comparable_label = "Directly Comparable" if (same_role and same_level and same_loc) else "Cross-Cohort Analysis"
 
         render_html(f"""
         <div class="glass-card" style="margin-bottom: 14px;">
@@ -255,24 +268,35 @@ else:
         """)
 
         if same_role and same_level and same_loc:
-            st.success("✅ **Directly Comparable Peers**: Both individuals share identical role families, career levels, and business locations.")
+            render_html("""
+            <div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 10px; padding: 12px 14px; margin-top: 8px;">
+                <div style="font-weight: 700; color: #065F46; font-size: 0.85rem;">✓ Directly Comparable Peers</div>
+                <div style="font-size: 0.8rem; color: #047857; margin-top: 2px;">Both employees share identical role family, career progression level, and business location benchmarks.</div>
+            </div>
+            """)
         else:
             reasons = []
-            if not same_role: reasons.append(f"Different role families ({pA['role_family']} vs {pB['role_family']})")
-            if not same_level: reasons.append(f"Different career levels ({pA['level_code']} vs {pB['level_code']})")
-            if not same_loc: reasons.append(f"Different business locations ({pA['location_code']} vs {pB['location_code']})")
-            st.warning(f"⚠️ **Incomparable Baseline Factors**: {'; '.join(reasons)}.")
+            if not same_role: reasons.append(f"Distinct role families ({pA['role_family']} vs {pB['role_family']})")
+            if not same_level: reasons.append(f"Distinct career levels ({pA['level_code']} vs {pB['level_code']})")
+            if not same_loc: reasons.append(f"Distinct business locations ({pA['location_code']} vs {pB['location_code']})")
+            reasons_text = "; ".join(reasons)
+            render_html(f"""
+            <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 10px; padding: 12px 14px; margin-top: 8px;">
+                <div style="font-weight: 700; color: #334155; font-size: 0.85rem;">ℹ️ Cross-Cohort Context</div>
+                <div style="font-size: 0.8rem; color: #475569; margin-top: 2px;">{reasons_text}. Compensation variances align with standard market grade differences.</div>
+            </div>
+            """)
 
         render_html("</div>")
 
         # Documented Justification Card
         justifications = []
         if higher_emp["perf_rating"] >= 4.5 and lower_emp["perf_rating"] < 4.0:
-            justifications.append(f"Superior Performance Record: {higher_emp['perf_rating']} ({higher_emp['perf_label']}) vs {lower_emp['perf_rating']} ({lower_emp['perf_label']})")
+            justifications.append(f"Documented Performance Delta: {higher_emp['perf_rating']} ({higher_emp['perf_label']}) vs {lower_emp['perf_rating']} ({lower_emp['perf_label']})")
         if higher_emp["promotions_count"] > lower_emp["promotions_count"]:
-            justifications.append(f"Career Progression: {higher_emp['promotions_count']} documented promotions vs {lower_emp['promotions_count']}")
+            justifications.append(f"Promotion History: {higher_emp['promotions_count']} documented promotions vs {lower_emp['promotions_count']}")
         if higher_emp["months_in_company"] > lower_emp["months_in_company"] + 12:
-            justifications.append(f"Tenured Service: {higher_emp['months_in_company']} months vs {lower_emp['months_in_company']} months")
+            justifications.append(f"Tenured Experience: {higher_emp['months_in_company']} months vs {lower_emp['months_in_company']} months")
 
         render_html("""
         <div class="glass-card">
@@ -285,8 +309,19 @@ else:
         """)
 
         if justifications:
-            st.info("💡 **Documented Explanations Identified:**\n" + "\n".join([f"- {j}" for j in justifications]))
+            items_html = "".join([f'<div style="font-size: 0.82rem; color: #1E40AF; padding: 2px 0;">• {j}</div>' for j in justifications])
+            render_html(f"""
+            <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px; padding: 12px 14px; margin-top: 8px;">
+                <div style="font-weight: 700; color: #1E40AF; font-size: 0.85rem; margin-bottom: 4px;">✓ Documented Explanations Identified</div>
+                {items_html}
+            </div>
+            """)
         else:
-            st.error("🚨 **POTENTIAL UNEXPLAINED DISPARITY**: No documented performance or tenure factors fully justify the compensation gap. Flagged for HR compensation partner audit.")
+            render_html("""
+            <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 10px; padding: 12px 14px; margin-top: 8px;">
+                <div style="font-weight: 700; color: #92400E; font-size: 0.85rem;">⚖️ Flagged for Compensation Review</div>
+                <div style="font-size: 0.8rem; color: #78350F; margin-top: 2px;">No recorded performance rating or tenure differences fully account for this pay differential. Flagged in the HR partner audit queue.</div>
+            </div>
+            """)
 
         render_html("</div>")

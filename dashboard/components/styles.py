@@ -65,17 +65,40 @@ def inject_custom_css() -> None:
             border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
         }
 
-        [data-testid="stSidebar"] * {
-            color: #E2E8F0 !important;
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] div:not([data-baseweb="select"] *) {
+            color: #E2E8F0;
         }
 
         [data-testid="stSidebarNav"] {
-            padding-top: 1rem !important;
+            padding-top: 0.8rem !important;
         }
 
         [data-testid="stSidebarNav"] span {
             font-size: 0.88rem !important;
-            font-weight: 500 !important;
+            font-weight: 600 !important;
+            color: #E2E8F0 !important;
+            text-transform: capitalize !important;
+        }
+
+        /* Replace default 'app' menu entry with 'System Overview' */
+        [data-testid="stSidebarNav"] ul li:first-child a span {
+            display: none !important;
+        }
+
+        [data-testid="stSidebarNav"] ul li:first-child a::after {
+            content: "System Overview" !important;
+            font-size: 0.88rem !important;
+            font-weight: 600 !important;
+            color: #E2E8F0 !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        [data-testid="stSidebarNav"] ul li:first-child a[aria-current="page"]::after {
+            color: #60A5FA !important;
+            font-weight: 700 !important;
         }
 
         [data-testid="stSidebarNav"] li div {
@@ -85,7 +108,68 @@ def inject_custom_css() -> None:
         }
 
         [data-testid="stSidebarNav"] li div:hover {
-            background-color: rgba(255, 255, 255, 0.06) !important;
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        /* Sidebar Selectbox & Input Controls — High-Contrast Dark Slate */
+        [data-testid="stSidebar"] div[data-baseweb="select"] > div {
+            background-color: #1E293B !important;
+            border: 1px solid #334155 !important;
+            border-radius: 10px !important;
+        }
+
+        [data-testid="stSidebar"] div[data-baseweb="select"] * {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+
+        [data-testid="stSidebar"] div[data-baseweb="select"] input {
+            color: #FFFFFF !important;
+        }
+
+        [data-testid="stSidebar"] div[data-baseweb="select"] svg {
+            fill: #94A3B8 !important;
+        }
+
+        [data-testid="stSidebar"] .stSelectbox label {
+            color: #CBD5E1 !important;
+            font-weight: 600 !important;
+            font-size: 0.82rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.04em !important;
+        }
+
+        [data-testid="stSidebar"] .stSlider label {
+            color: #CBD5E1 !important;
+            font-weight: 600 !important;
+        }
+
+        /* Popover dropdown menu */
+        div[data-baseweb="popover"] ul {
+            background-color: #1E293B !important;
+            border: 1px solid #334155 !important;
+            border-radius: 10px !important;
+        }
+
+        div[data-baseweb="popover"] li * {
+            color: #F8FAFC !important;
+            font-weight: 500 !important;
+        }
+
+        div[data-baseweb="popover"] li:hover {
+            background-color: #334155 !important;
+        }
+
+        /* Main Content Select Boxes & Multiselects */
+        .stApp div[data-baseweb="select"] > div {
+            border-radius: 10px !important;
+            border: 1px solid #CBD5E1 !important;
+            background-color: #FFFFFF !important;
+        }
+
+        .stApp div[data-baseweb="select"] * {
+            color: #0F172A !important;
+            font-weight: 600 !important;
         }
 
         /* Glassmorphic White Container Cards */
@@ -114,13 +198,6 @@ def inject_custom_css() -> None:
         .badge-danger  { background: #FEF2F2; color: #B91C1C; }
         .badge-info    { background: #EFF6FF; color: #1D4ED8; }
         .badge-purple  { background: #F5F3FF; color: #6D28D9; }
-
-        /* Interactive Widgets Styling */
-        div[data-baseweb="select"] > div {
-            border-radius: 10px !important;
-            border: 1px solid #CBD5E1 !important;
-            background-color: #FFFFFF !important;
-        }
 
         /* Button Styling */
         .stButton > button {

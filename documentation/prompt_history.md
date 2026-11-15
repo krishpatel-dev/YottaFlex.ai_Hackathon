@@ -213,6 +213,31 @@ fix this thing
 
 ---
 
+### Prompt 7: UI Polish, JSON Dossier Formatting & Sidebar Dropdown Contrast
+* **Timestamp:** 2026-11-15T16:30:41+05:30
+* **Goal:** Replace raw JSON dumps on disparity and adjustment pages with styled UI cards, fix sidebar dropdown invisible text contrast, and soften harsh red warning banners.
+* **Full Prompt Text:**
+```text
+ok so i have given you pics of the screens, in few there is still some json thingy stuff is written and few red warning somethings is there. analyzie each pic and look for it
+
+and small thing which i have noticed, if you see executive overview, inside the global filters, as you can see the text is not visible inside it (text is there but very light grey color)
+ same in compansation analysis
+```
+
+---
+
+### Prompt 8: Sidebar Navigation Capitalization & Menu Title Customization
+* **Timestamp:** 2026-11-15T16:45:10+05:30
+* **Goal:** Capitalize navigation labels in the sidebar menu and replace the default "app" heading with a professional enterprise platform title.
+* **Full Prompt Text:**
+```text
+yeah one more thing, in the side menu, just make the first letter capital for example, Compansation Analysis. and also give some diff heading instead of "app" in the first menu
+
+now continue
+```
+
+---
+
 ## 3. Where AI Accelerated Development
 
 1. **Relational Schema Boilerplate**: AI generated complete, typed SQLAlchemy 2.0 ORM models and DDL SQL for 12 normalized tables with extensive foreign keys, checks, and comments.
@@ -261,3 +286,11 @@ AI was not relied upon blindly. Several critical bugs, mathematical mismatches, 
 9. **Frontend Markdown HTML Code-Block Escaping**:
    - *Problem*: In Markdown specification, any lines indented by 4 or more spaces following a blank line are automatically parsed as `<pre><code>` code blocks, causing raw HTML tags (`<div style="...">`, `<span style="...">`) and `None` to display literally on the frontend instead of rendering as styled DOM elements.
    - *Human Resolution*: Built a centralized `render_html(html_str)` sanitizer in `dashboard/components/styles.py` that strips multiline indentation (`re.sub(r'^[ \t]+', '', text, flags=re.M)`), strips comments, and passes cleanly formatted HTML directly to Streamlit. Fixed `render_kpi_row` to render into columns directly without wrapping in redundant `st.markdown(None)` calls. Verified all 5 pages render clean, modern CSS components.
+
+10. **Elimination of Raw JSON Dumps in Favor of Executive Dossiers**:
+    - *Problem*: Pages 4 and 5 exposed raw debug JSON structures via `st.json(...)` for supporting audit evidence and linked performance records, detracting from the production executive UX.
+    - *Human Resolution*: Replaced raw JSON displays with formatted key-value summary dossiers and linked appraisal review cards showing reviewer ratings, review periods, and audit tags cleanly.
+
+11. **Sidebar Navigation Title Casing & Root Label Customization**:
+    - *Problem*: Streamlit's default multipage navigation displayed lowercase file-derived names (`executive overview`, `compensation analysis`, etc.) and designated the entrypoint script as simply `"app"`. Furthermore, sidebar dropdown selectboxes had light-grey text against white input elements, causing poor contrast.
+    - *Human Resolution*: Renamed all page files to Title Case (`1_Executive_Overview.py`, `2_Compensation_Analysis.py`, etc.), injected targeted CSS targeting `[data-testid="stSidebarNav"]` to capitalize labels and replace the `"app"` link with `"System Overview"`, and styled sidebar inputs to high-contrast dark slate (`#1E293B`) with pure white text (`#FFFFFF`) and dark popover options.
